@@ -1,5 +1,7 @@
 import React from "react";
 import clsx from "clsx";
+import { FCC } from "../../react";
+
 import styles from "./skeleton.module.css";
 
 interface Props {
@@ -19,7 +21,7 @@ const isChildNull = (children) => {
   return !React.Children.count(children);
 };
 
-const Skeleton: React.FC<Props> = ({
+const Skeleton: FCC<Props> = ({
   children,
   width = 24,
   height = 24,

@@ -1,8 +1,8 @@
 import React from "react";
-import clsx from "clsx";
 import styles from "./details.module.css";
+import { FCC } from "../../react";
 
-interface DetailsProps {
+export interface Props {
   animate?: boolean;
   heightClosed?: number; // 32
   heightOpened?: number; // 400
@@ -10,7 +10,7 @@ interface DetailsProps {
   summary?: React.ReactNode | string;
 }
 
-const Details: React.FC<DetailsProps> = ({
+const Details: FCC<Props> = ({
   children,
   heightClosed = 32,
   heightOpened = 400,

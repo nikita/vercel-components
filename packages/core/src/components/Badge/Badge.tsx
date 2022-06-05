@@ -2,6 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { HTMLAttributes } from "react";
 import styles from "./Badge.module.css";
+import { FCC } from "../../react";
 
 interface Props {
   className?: HTMLAttributes<HTMLSpanElement>["className"];
@@ -11,7 +12,7 @@ interface Props {
   size?: "small" | "large";
 }
 
-const Badge: React.FC<Props> = ({
+const Badge: FCC<Props> = ({
   children,
   className,
   type,

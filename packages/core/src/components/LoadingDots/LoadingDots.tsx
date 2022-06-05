@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { CSSProperties } from "react";
+import { FCC } from "../../react";
 import styles from "./LoadingDots.module.css";
 
 interface Props {
@@ -18,7 +19,7 @@ interface Props {
  * <LoadingDots size={2}/>
  * ```
  */
-const LoadingDots: React.ComponentType<Props> = ({ size = 2, children }) => {
+const LoadingDots: FCC<Props> = ({ size = 2, children }) => {
   return (
     <span
       className={clsx(styles.loading)}

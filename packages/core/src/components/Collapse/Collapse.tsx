@@ -15,6 +15,7 @@ import { FocusRing } from "@react-aria/focus";
 import { Text } from "../Text";
 import styles from "./Collapse.module.css";
 import ChevronDown from "../../icons/ChevronDown";
+import { FCC } from "../../react";
 
 interface ICollapseContext {
   onChange?: (val: string | React.ReactNode) => void;
@@ -41,7 +42,7 @@ interface Props {
   size?: "small";
   card?: boolean;
 }
-const Collapse: React.ComponentType<Props> = memo(
+const Collapse: FCC<Props> = memo(
   ({ title, subtitle, defaultExpanded, size, card, children }) => {
     const isSmall = size === "small";
     // gets ignored if context is present

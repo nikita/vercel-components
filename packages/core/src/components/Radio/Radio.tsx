@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { useRadioGroup, useRadio } from "@react-aria/radio";
 import { useRadioGroupState } from "@react-stately/radio";
 import { useFocusRing } from "@react-aria/focus";
+import { FCC } from "../../react";
 
 import styles from "./radio.module.css";
 
@@ -15,7 +16,7 @@ interface RadioGroupProps {
   value?: string;
 }
 
-export const RadioGroup: FC<RadioGroupProps> = (props) => {
+export const RadioGroup: FCC<RadioGroupProps> = (props) => {
   let { children, label } = props;
   let state = useRadioGroupState(props);
   let { radioGroupProps, labelProps } = useRadioGroup(props, state);
@@ -35,7 +36,7 @@ interface RadioItemProps {
   value: string;
 }
 
-export const RadioItem: FC<RadioItemProps> = (props) => {
+export const RadioItem: FCC<RadioItemProps> = (props) => {
   let { children, disabled } = props;
 
   let { isFocusVisible, focusProps } = useFocusRing();
@@ -47,7 +48,6 @@ export const RadioItem: FC<RadioItemProps> = (props) => {
   return (
     <label className={clsx([styles.item, { [styles.disabled]: disabled }])}>
       <span className={styles.check}>
-        ​
         <input
           className={clsx([styles.input, "geist-sr-only"])}
           {...inputProps}

@@ -3,15 +3,16 @@ import clsx from "clsx";
 
 import { Text } from "../Text";
 import { useState, Children, useContext } from "react";
+import { FCC } from "../../react";
 
 import { DisabledContext } from "../../contexts/DisabledContext";
 import styles from "./Fieldset.module.css";
 
-const Status: React.FC = ({ children }) => {
+const Status: FCC = ({ children }) => {
   return <div className={styles.status}>{children}</div>;
 };
 
-const Actions: React.FC = ({ children }) => {
+const Actions: FCC = ({ children }) => {
   return (
     <div className={styles.actions}>
       <div>{children}</div>
@@ -19,17 +20,7 @@ const Actions: React.FC = ({ children }) => {
   );
 };
 
-interface FooterProps {
-  style?: React.CSSProperties;
-  disabled?: boolean;
-  highlight?: boolean;
-}
-interface IFooter extends React.FC<FooterProps> {
-  Status: typeof Status;
-  Actions: typeof Actions;
-}
-
-const Footer: IFooter = ({ children, style, disabled, highlight }) => {
+const Footer = ({ children, style, disabled, highlight }) => {
   const ctxDisabled = useContext(DisabledContext);
   const isDisabled = disabled ?? ctxDisabled;
 
@@ -60,10 +51,14 @@ interface Fs {
   Content: React.FC<
     { disabled?: boolean } & React.HTMLAttributes<HTMLDivElement>
   >;
-  Title: React.FC;
-  Subtitle: React.FC;
+  Title: FCC;
+  Subtitle: FCC;
   ErrorText: React.FC;
-  Footer: typeof Footer;
+  Footer: FCC<{
+    style?: React.CSSProperties;
+    disabled?: boolean;
+    highlight?: boolean;
+  }>;
 }
 
 const Tabs = ({ children, tabs, ...props }) => {

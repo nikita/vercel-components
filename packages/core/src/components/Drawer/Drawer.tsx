@@ -3,6 +3,7 @@ import clsx from "clsx";
 import useMeasure from "react-use-measure";
 import { usePreventScroll } from "@react-aria/overlays";
 import Portal from "@reach/portal";
+import { FCC } from "../../react";
 // import { FocusScope } from "@react-aria/focus";
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
   onDismiss?: () => void;
 }
 
-const Drawer: React.ComponentType<Props> = ({ children, show, onDismiss }) => {
+const Drawer: FCC<Props> = ({ children, show, onDismiss }) => {
   usePreventScroll({ isDisabled: !show });
 
   // useMeasure will update through window resize

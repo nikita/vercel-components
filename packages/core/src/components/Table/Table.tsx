@@ -9,6 +9,7 @@ import { Scroller } from "../Scroller";
 
 import styles from "./Table.module.css";
 import reset from "../../styles/reset/reset.module.css";
+import { FCC } from "../../react";
 
 interface Cell<T extends any = any>
   extends React.FC<{
@@ -57,7 +58,7 @@ interface Props {
   empty?: JSX.Element;
 }
 
-const Table: React.ComponentType<Props> = ({
+const Table: FCC<Props> = ({
   selectable,
   columns = [],
   data = [],

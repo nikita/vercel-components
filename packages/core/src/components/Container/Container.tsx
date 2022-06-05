@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import { FCC } from "../../react";
 
 type Direction = "column" | "row";
 export interface Props {
@@ -43,7 +44,7 @@ export interface Props {
   wrapper?: boolean;
 }
 
-const Container: React.ComponentType<Props> = ({
+const Container: FCC<Props> = ({
   children,
   flex = 1,
   row,

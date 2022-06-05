@@ -1,11 +1,12 @@
 import React from "react";
 import clsx from "clsx";
 import styles from "./window.module.css";
+import { FCC } from "../../react";
 
-interface WindowProps {
+interface Props {
   title?: string | JSX.Element;
 }
-const Window: React.ComponentType<WindowProps> = ({ title, children }) => {
+const Window: FCC<Props> = ({ title, children }) => {
   return (
     <div className={clsx(styles.window, "window")}>
       <style jsx>{`

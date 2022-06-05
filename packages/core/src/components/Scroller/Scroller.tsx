@@ -4,12 +4,13 @@ import clsx from "clsx";
 import styles from "./Scroller.module.css";
 import clamp from "lodash/clamp";
 import { isBrowser } from "../../utils/isBrowser";
+import { FCC } from "../../react";
 
 interface Props {
   width?: React.HTMLAttributes<HTMLDivElement>["style"]["width"];
   height?: React.HTMLAttributes<HTMLDivElement>["style"]["height"];
 }
-const Scroller: React.ComponentType<Props> = ({ width, height, children }) => {
+const Scroller: FCC<Props> = ({ width, height, children }) => {
   const ref = useRef<HTMLDivElement>();
 
   const [top, setTop] = useState(false);

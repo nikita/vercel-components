@@ -10,6 +10,7 @@ import styles from "./Entity.module.css";
 import EntityField from "./EntityField";
 
 import { PlaceHolderContext } from "./index";
+import { FCC } from "../../react";
 
 interface Props {
   placeholder?: boolean;
@@ -20,7 +21,7 @@ interface Props {
   footer?: React.ReactElement;
 }
 
-const Entity: React.FC<Props> = ({
+const Entity: FCC<Props> = ({
   children,
   placeholder,
   thumbnail,
@@ -86,7 +87,7 @@ const Entity: React.FC<Props> = ({
               <Text
                 className="geist-themed geist-secondary"
                 style={{ width: "100%" }}
-                color={'geist-secondary'}
+                color={"geist-secondary"}
               >
                 {footer}
               </Text>

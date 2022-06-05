@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import { FCC } from "../../react";
 import styles from "./Note.module.css";
 
 interface Props {
@@ -30,7 +31,7 @@ const getLabel = (label?: false | string, type?: Props["type"]) => {
   if (type) return labelMap[type];
 };
 
-const Note: React.FC<Props> = ({
+const Note: FCC<Props> = ({
   children,
   size,
   label,

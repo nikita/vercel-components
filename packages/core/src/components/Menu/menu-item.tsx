@@ -6,6 +6,7 @@ import React, {
 } from "react";
 import clsx from "clsx";
 import { useId } from "@react-aria/utils";
+import { FCC } from "../../react";
 
 import { useMenu } from "./menu-context";
 
@@ -99,7 +100,7 @@ interface MenuItemProps {
   suffix?: JSX.Element;
 }
 
-export const MenuItem: React.ComponentType<MenuItemProps> = ({
+export const MenuItem: FCC<MenuItemProps> = ({
   children,
   onClick,
   type,

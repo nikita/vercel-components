@@ -3,6 +3,7 @@ import clsx from "clsx";
 import Portal from "@reach/portal";
 import { usePopper } from "react-popper";
 import { useId } from "@react-aria/utils";
+import { FCC } from "../../react";
 
 import useMediaQuery from "../../hooks/useMediaQuery";
 
@@ -90,7 +91,7 @@ interface MenuInnerProps {
   divide?: boolean;
 }
 
-const MenuInner: React.FC<MenuInnerProps> = ({ divide, width, children }) => {
+const MenuInner: FCC<MenuInnerProps> = ({ divide, width, children }) => {
   const { listRef, menuId } = useMenu();
 
   const isActive =
@@ -124,11 +125,7 @@ interface MenuProps {
 /**
  * @see {@link MenuWrapper} for code sample usage
  */
-export const Menu: React.FC<MenuProps> = ({
-  children,
-  width = 150,
-  divide,
-}) => {
+export const Menu: FCC<MenuProps> = ({ children, width = 150, divide }) => {
   const { open, listRef, setOpen, buttonRef, selected, setSelected } =
     useMenu();
 

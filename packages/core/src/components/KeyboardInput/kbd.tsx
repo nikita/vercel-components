@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import { FCC } from "../../react";
 
 import styles from "./kbd.module.css";
 
@@ -11,14 +12,7 @@ interface KBDProps {
   small?: boolean;
 }
 
-const KBD: React.FC<KBDProps> = ({
-  meta,
-  shift,
-  alt,
-  ctrl,
-  small,
-  children,
-}) => {
+const KBD: FCC<KBDProps> = ({ meta, shift, alt, ctrl, small, children }) => {
   return (
     <kbd className={clsx(styles.kbd, { [styles.small]: small })}>
       {meta && <span>⌘</span>}
