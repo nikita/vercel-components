@@ -1,0 +1,57 @@
+a.link {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+a.link.color {
+  color: var(--geist-link-color);
+}
+
+@media (hover: hover) {
+  a.link:hover {
+    text-decoration: none;
+  }
+
+  a.link:hover.underline {
+    text-decoration: underline;
+  }
+
+  a.link:hover i.anchor {
+    visibility: visible;
+  }
+}
+
+i.icon__CNZMR {
+  margin: 0 5px;
+  display: inline-flex;
+}
+
+i.anchor {
+  visibility: hidden;
+  position: absolute;
+  transform: translateX(-200%);
+  display: inline-flex;
+}
+
+a.internal {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+a.internal.color {
+  color: var(--geist-link-color);
+}
+
+@media (hover: hover) {
+  a.internal:hover {
+    text-decoration: none;
+  }
+
+  a.internal:hover.underline {
+    text-decoration: underline;
+  }
+}

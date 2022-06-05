@@ -177,6 +177,51 @@ a.active {
   --wv-red: #ff4e42;
 }
 
+@media screen and (min-width: 601px) {
+  .geist-show-on-mobile {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  :root {
+    --header-height: 64px;
+  }
+
+  .geist-center-on-mobile {
+    text-align: center;
+  }
+
+  .geist-hide-on-mobile {
+    display: none !important;
+  }
+
+  .geist-overflow-reset-mobile {
+    overflow: visible !important;
+    overflow: initial !important;
+    -webkit-overflow-scrolling: initial !important;
+  }
+}
+
+@media screen and (min-width: 961px) {
+  .geist-hide-on-desktop,
+  .geist-show-on-tablet {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .geist-hide-on-tablet,
+  .geist-show-on-desktop {
+    display: none !important;
+  }
+
+  .geist-hide-on-desktop,
+  .geist-show-on-tablet {
+    display: block;
+  }
+}
+
 .dark-theme,
 .invert-theme,
 .__DARK {

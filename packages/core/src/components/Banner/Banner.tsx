@@ -1,44 +1,86 @@
 import React from "react";
-import Link from "next/link";
 import clsx from "clsx";
-
+import { Link } from "../Link";
 import XIcon from "../../icons/XIcon";
-
 import { default as useBanner } from "./useBanner";
-
 import styles from "./Banner.module.css";
 import { IconSizeContext } from "../../contexts/IconSizeContext";
 
 interface Props {
-  title: string;
-  subtitle?: string;
-  linkText: string;
-  href: string;
+  title?: string;
+  desc?: string;
+  href?: string;
+  as?: string;
+  linkText?: string;
+  icon?: string;
+  special?: string;
   localStorageKey?: string;
+  hideTitleOnMobile?: boolean;
 }
 
 const Banner: React.ComponentType<Props> = ({
-  href,
   title,
-  subtitle,
+  desc,
+  href,
+  as,
   linkText,
+  icon,
+  special,
   localStorageKey,
+  hideTitleOnMobile,
 }) => {
   const [showBanner, handleClose] = useBanner(localStorageKey);
+
+  /*
+        // Function recovered from Vercel page
+        function({category, action, label}) {
+            try {
+                window.ga("send", {
+                    hitType: "event",
+                    eventCategory: category,
+                    eventAction: action,
+                    eventLabel: label
+                })
+            } catch (r) {
+                console.error("Cannot report metrics: event", r)
+            }
+        }
+
+
+
+        // Sends metrics to Google?
+        onClick={reportMetrics({
+          category: "Marketing",
+          action: "Clicked on banner",
+          label: "Banner CTA",
+        })}
+        */
   return showBanner ? (
     <div
       role="banner"
-      className={clsx([
-        // "invert-theme",
-        styles.banner,
-      ])}
+      className={clsx(styles.banner, styles.hidden, {
+        [styles["invert-theme"]]: special,
+      })}
     >
-      <Link href={href}>
-        <a>
-          <span className={styles.title}>{title}</span>
-          <span className={styles.subtitle}>{subtitle}</span>
-          <span className={styles.link}>{linkText}</span>
-        </a>
+      <Link as={as} href={href}>
+        {icon ? <span className={styles.icon}>{icon}</span> : null}
+        <span
+          className={clsx([
+            styles.title,
+            { "geist-hide-on-mobile": hideTitleOnMobile },
+          ])}
+        >
+          {title}
+        </span>
+        <span className={styles.subtitle}>{desc}</span>
+        <span
+          className={clsx(styles.link, {
+            [styles["link-hide-title-on-mobile"]]: hideTitleOnMobile,
+            [styles["hide-title"]]: !title,
+          })}
+        >
+          {linkText || "Learn More"}
+        </span>
       </Link>
       <button
         className={styles.close}

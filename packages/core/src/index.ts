@@ -4,7 +4,7 @@ export { ThemeContextProvider, useTheme } from "./contexts/ThemeContext";
 
 export * from "./components/Avatar";
 export * from "./components/Badge";
-// export * from "./components/Banner";
+export * from "./components/Banner";
 export * from "./components/Button";
 export { Capacity } from "./components/Capacity";
 export * from "./components/Checkbox";

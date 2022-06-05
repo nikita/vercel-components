@@ -15,18 +15,21 @@
   position: relative;
 }
 
-.close {
-  background: none;
-  border: none;
-  display: inline-flex;
-  color: var(--accents-5);
-  position: absolute;
-  right: 20px;
-  cursor: pointer;
+html.banner-hidden .banner.hidden {
+  height: 0;
+  transform: scaleY(0);
+  border-bottom: 0;
 }
-@media (max-width: 700px) {
-  .close {
+
+@media (max-width: 340px) {
+  .banner {
     display: none;
+  }
+}
+
+@media (hover: hover) {
+  .banner:hover .subtitle {
+    color: var(--geist-foreground);
   }
 }
 
@@ -38,6 +41,32 @@
   display: none;
   color: var(--accents-6);
   transition: color 0.2s ease;
+}
+
+@media (min-width: 710px) {
+  .subtitle {
+    display: inline;
+    display: initial;
+    font-size: 14px;
+  }
+
+  .title {
+    font-weight: 600;
+  }
+}
+
+.icon {
+  width: 21px;
+  height: 20px;
+  margin-right: 10px;
+  display: none;
+}
+
+@media (min-width: 350px) {
+  .icon {
+    display: inline;
+    display: initial;
+  }
 }
 
 .link {
@@ -56,13 +85,30 @@
   transform: translateY(-2px);
 }
 
-@media (min-width: 710px) {
-  .title {
-    font-weight: 600;
+.hide-title:before {
+  display: none;
+  margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .link-hide-title-on-mobile:before {
+    display: none;
+    margin: 0;
   }
-  .subtitle {
-    display: inline;
-    display: initial;
-    font-size: 14px;
+}
+
+.close {
+  background: none;
+  border: none;
+  display: inline-flex;
+  color: var(--accents-5);
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .close {
+    display: none;
   }
 }
