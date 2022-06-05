@@ -4,18 +4,17 @@ import userEvent from "@testing-library/user-event";
 import ToastArea from "./ToastArea";
 import { IToastsContext } from "./ToastsProvider";
 
-import { mocked } from "ts-jest/utils";
 import useToasts from "./useToasts";
 jest.mock("./useToasts");
-const useToastsMock = mocked(useToasts);
+const useToastsMock = jest.mocked(useToasts);
 
 import ToastContainer from "./ToastContainer";
 jest.mock("./ToastContainer");
-const ToastContainerMock = mocked(ToastContainer);
+const ToastContainerMock = jest.mocked(ToastContainer);
 
 import { useHover } from "@react-aria/interactions";
 jest.mock("@react-aria/interactions");
-const useHoverMock = mocked(useHover);
+const useHoverMock = jest.mocked(useHover);
 
 jest.useFakeTimers();
 jest.mock("components/Button", () => ({
