@@ -38,6 +38,7 @@ export * from "./components/Spinner";
 export * from "./components/StatusDot";
 
 export * from "./components/Switch";
+export * from "./components/Screen";
 // export * from "./components/Table";
 export * from "./components/Tabs";
 export * from "./components/Tag";
