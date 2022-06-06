@@ -6,7 +6,7 @@ export * from "./components/Avatar";
 export * from "./components/Badge";
 export * from "./components/Banner";
 export * from "./components/Button";
-export { Capacity } from "./components/Capacity";
+export * from "./components/Capacity";
 export * from "./components/Checkbox";
 export * from "./components/Collapse";
 export * from "./components/Container";
@@ -20,8 +20,9 @@ export * from "./components/Fieldset";
 export * from "./components/FileTree";
 // export * from "./components/Image";
 export * from "./components/Input";
-export { KBD } from "./components/KeyboardInput";
+export * from "./components/KeyboardInput";
 export * from "./components/Label";
+export * from "./components/Link";
 export * from "./components/LoadingDots";
 // export * from "./components/Menu";
 export { default as Modal } from "./components/Modal";
@@ -34,7 +35,7 @@ export * from "./components/Snippet";
 export * from "./components/Spacer";
 export * from "./components/Spinner";
 
-export { StatusDot } from "./components/StatusDot";
+export * from "./components/StatusDot";
 
 export * from "./components/Switch";
 // export * from "./components/Table";

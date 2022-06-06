@@ -7,7 +7,7 @@ import { FCC } from "../../react";
 
 import useMediaQuery from "../../hooks/useMediaQuery";
 
-import Drawer from "../Drawer";
+import { Drawer } from "../Drawer";
 
 import classes from "./Menu.module.css";
 

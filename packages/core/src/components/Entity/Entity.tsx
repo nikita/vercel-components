@@ -2,7 +2,7 @@ import { Children } from "react";
 import { isFragment } from "react-is";
 import clsx from "clsx";
 
-import Skeleton from "../../components/Skeleton";
+import { Skeleton } from "../../components/Skeleton";
 import { Text } from "../../components/Text";
 import { Container } from "../../components/Container";
 

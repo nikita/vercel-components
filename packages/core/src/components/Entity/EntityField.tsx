@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import clsx from "clsx";
 
-import Skeleton from "../../components/Skeleton";
+import { Skeleton } from "../../components/Skeleton";
 import { Container } from "../../components/Container";
 import { Text } from "../../components/Text";
 

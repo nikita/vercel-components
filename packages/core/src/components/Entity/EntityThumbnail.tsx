@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import Skeleton from "../../components/Skeleton";
+import { Skeleton } from "../../components/Skeleton";
 import styles from "./Entity.module.css";
 import { PlaceHolderContext } from "./index";
 
