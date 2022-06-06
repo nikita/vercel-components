@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, memo } from "react";
 import clsx from "clsx";
 import { useId } from "@react-aria/utils";
 import ChevronDown from "../../icons/ChevronDown";
@@ -100,4 +100,4 @@ const Select: FCC<Props> = ({
   );
 };
 
-export default Select;
+export default memo(Select);
