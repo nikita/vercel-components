@@ -7,19 +7,27 @@ interface Props
     React.LabelHTMLAttributes<HTMLLabelElement>,
     HTMLLabelElement
   > {
-  label: React.ReactNode;
+  value?: string;
+  withInput?: boolean;
+  wrapperClassName?: string;
 }
 
 const Label: React.ComponentType<Props> = ({
   children,
-  htmlFor,
-  label,
+  className,
+  id,
   style,
+  value,
+  withInput,
+  wrapperClassName,
 }) => {
   return (
-    <label htmlFor={htmlFor}>
-      <div className={clsx(styles.label, styles.input)} {...{ style }}>
-        {label}
+    <label className={wrapperClassName} htmlFor={id} style={style}>
+      <div
+        className={clsx(styles.label, className, { [styles.input]: withInput })}
+        {...{ style }}
+      >
+        {value}
       </div>
       {children}
     </label>
