@@ -7,6 +7,7 @@ import { useFocusRing } from "@react-aria/focus";
 import { Spinner } from "../Spinner";
 import { IconSizeContext } from "../../contexts/IconSizeContext";
 import { DisabledContext } from "../../contexts/DisabledContext";
+import reset from "../../styles/reset/reset.module.css";
 import styles from "./button.module.css";
 
 type IntrinsicProps = React.DetailedHTMLProps<
@@ -126,7 +127,9 @@ const Button: FC<Props> = forwardRef(
             ? clsx(styles.base, className)
             : clsx(
                 styles.base,
+                reset.reset,
                 styles.button,
+                reset.reset,
                 className,
                 type !== "secondary" ? themeType : null,
                 [
