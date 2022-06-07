@@ -55,6 +55,16 @@
   margin-left: auto;
 }
 
+.content.flexGrow {
+  flex-grow: 1;
+}
+
+.content.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .base[data-focus] {
   box-shadow: 0 0 0 1px var(--geist-background),
     0 0 0 3px var(--themed-bg, var(--geist-foreground));
@@ -125,7 +135,7 @@
   box-shadow: var(--shadow-small);
 }
 
-:global(.dark-theme) .button.shadow {
+.dark-theme .button.shadow {
   box-shadow: none;
 }
 
@@ -150,7 +160,7 @@
   --lighten-color: hsla(0, 0%, 100%, 0.8);
 }
 
-:global(.dark-theme) .ghost {
+.dark-theme .ghost {
   --lighten-color: rgba(0, 0, 0, 0.75);
 }
 
@@ -170,7 +180,7 @@
   --lighten-color: hsla(0, 0%, 100%, 0.7);
 }
 
-:global(.dark-theme) .ghost[data-active] {
+.dark-theme .ghost[data-active] {
   --lighten-color: rgba(0, 0, 0, 0.7);
 }
 
@@ -213,63 +223,6 @@
   background-color: var(--accents-4);
 }
 
-:global(.dark-theme) .secondary.shadow {
+.dark-theme .secondary.shadow {
   border-color: var(--accents-2);
-}
-
-.custom_button[data-custom-button]:not([disabled]) {
-  color: var(--button-custom-fg);
-  background: var(--button-custom-bg);
-  border-color: var(--button-custom-border);
-}
-
-.custom_button[data-custom-button][data-focus] {
-  box-shadow: 0 0 0 1px var(--geist-background),
-    0 0 0 3px
-      var(
-        --button-custom-bg-hover,
-        var(--button-custom-bg, var(--geist-foreground))
-      );
-}
-
-.custom_button[data-custom-button][data-focus],
-.custom_button[data-custom-button][data-hover] {
-  color: var(--button-custom-fg-hover);
-  background: var(--button-custom-bg-hover);
-  border-color: var(--button-custom-border-hover);
-}
-
-.custom_button[data-custom-button][data-active] {
-  box-shadow: none;
-  color: var(--button-custom-fg-active);
-  background: var(--button-custom-bg-active);
-  border-color: var(--button-custom-border-active);
-}
-
-.with-git-icon-background_background {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  border-radius: 100%;
-  justify-content: center;
-  background-color: #fff;
-  border: 1px solid #fff;
-}
-
-.with-git-icon-background_background[data-git-type="bitbucket"] {
-  background-color: #0052cc;
-}
-
-.with-git-icon-background_background[data-git-type="bitbucket"] svg {
-  transform: scale(0.65);
-  color: #fff;
-}
-
-.with-git-icon-background_background[data-git-type="gitlab"] {
-  background-color: #6b4fbb;
-}
-
-.with-git-icon-background_background[data-git-type="gitlab"] svg {
-  transform: scale(0.75);
 }

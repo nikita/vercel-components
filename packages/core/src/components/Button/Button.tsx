@@ -1,158 +1,172 @@
-import React from "react";
-import { forwardRef, useState, useRef, useContext } from "react";
+import React, { FC, forwardRef, useRef, useContext } from "react";
 import clsx from "clsx";
+import mergeRefs from "react-merge-refs";
 import { useHover } from "@react-aria/interactions";
 import { useButton } from "@react-aria/button";
-import mergeRefs from "react-merge-refs";
-
+import { useFocusRing } from "@react-aria/focus";
 import { Spinner } from "../Spinner";
 import { IconSizeContext } from "../../contexts/IconSizeContext";
 import { DisabledContext } from "../../contexts/DisabledContext";
-
-import reset from "../../styles/reset/reset.module.css";
 import styles from "./button.module.css";
 
 type IntrinsicProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 >;
+
 export interface Props extends Omit<IntrinsicProps, "prefix" | "type"> {
+  Component?: any;
+  typeName?: string;
+  href?: string;
+  as?: string;
+  target?: string;
+  rel?: string;
+
   size?: "small" | "large";
   prefix?: JSX.Element | string;
   suffix?: JSX.Element | string;
-  align?: "start" | "grow";
+  align?: "start" | "grow" | "flex-grow" | "center";
   type?: "secondary" | "success" | "error" | "warning" | "alert" | "violet";
   shape?: "square" | "circle";
   variant?: "shadow" | "ghost" | "unstyled";
   loading?: boolean;
+  width?: string;
+  svgOnly?: boolean;
+  passthroughOnClick?: any;
+  passthroughOnMouseEnter?: any;
 }
-const Button: React.ComponentType<Props> = forwardRef(
+
+const getThemedClasses = (type, e = null, n = null) =>
+  type
+    ? [
+        "geist-themed",
+        `geist-${type}`,
+        e ? `geist-${type}-fill` : null,
+        n ? `geist-${type}-${n}` : null,
+      ]
+    : "";
+
+const Button: FC<Props> = forwardRef(
   (
     {
-      // custom props
+      Component,
+      typeName,
+      className,
+      href,
+      as,
+      target,
+      rel,
+      disabled,
+      loading,
+      width,
+      type,
       size,
       prefix,
       suffix,
-      align,
-      type,
-      shape,
-      variant,
-      // native props
-      className,
-      children,
-      disabled,
-      loading,
       onClick,
+      variant,
+      shape,
+      align,
+      children,
+      onMouseDown,
+      onMouseUp,
+      svgOnly,
+      passthroughOnClick,
+      passthroughOnMouseEnter,
       ...props
     },
     externalRef
   ) => {
+    const ComponentNew = Component === undefined ? "button" : Component;
+    const typeNameNew = typeName === undefined ? "submit" : typeName;
+    const variantNew = variant === undefined ? "invert" : variant;
+
     const ctxDisabled = useContext(DisabledContext);
-    const isDisabled = disabled ?? ctxDisabled;
+    const isDisabled = disabled || loading || ctxDisabled;
 
-    const [isFocused, setFocused] = useState(false);
-
+    const themeType = getThemedClasses(type, true);
     const ref = useRef<HTMLButtonElement>();
+    const { focusProps, isFocusVisible } = useFocusRing();
+    const { hoverProps, isHovered } = useHover({
+      isDisabled: isDisabled || loading,
+    });
     const { buttonProps, isPressed } = useButton(
       {
-        type: "submit",
-        isDisabled: isDisabled || loading,
-        onFocusChange: setFocused,
-        onKeyDown: (e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            onClick?.(e as any);
-            setFocused(true);
-          }
-          return e;
-        },
-        // e.pointerType: "mouse" | "touch"
-        // finger executes click on press end
-        onPressEnd: (e) => {
-          if (e.pointerType === "touch") {
-            onClick?.(e as any);
-          }
-          return e;
-        },
-        // mouse executes click on press start
-        onPressStart: (e) => {
-          if (e.pointerType === "mouse") {
-            setFocused(false);
-            onClick?.(e as any);
-          }
-          return e;
-        },
+        isDisabled: disabled,
+        target: target,
+        rel: rel,
+        elementType: ComponentNew,
+        // @ts-ignore
+        onPress: onClick,
+        // @ts-ignore
+        onPressStart: onMouseDown,
+        // @ts-ignore
+        onPressUp: onMouseUp,
       },
       ref
     );
 
-    const iconSizeContextValue = {
-      size: size === "large" ? 24 : size === "small" ? 16 : 20,
+    const iconSizeContextValue = (size) => {
+      const sizes = {
+        arge: 24,
+        small: 16,
+        default: 20,
+      };
+
+      return sizes[size || "default"];
     };
 
-    const { hoverProps, isHovered } = useHover({
-      isDisabled: isDisabled || loading,
-    });
-
     return (
-      <button
-        {...hoverProps}
-        {...buttonProps}
-        data-focus={isFocused ? "" : null}
-        data-active={isPressed ? "" : null}
-        data-hover={isHovered ? "" : null}
-        className={clsx([
-          reset.reset,
-          styles.base,
-          { [styles.button]: variant !== "unstyled" },
-          !variant && styles.invert,
-          {
-            [styles.ghost]: variant === "ghost",
-            [styles.shadow]: variant === "shadow",
-          },
-          {
-            [styles.shape]: !!shape,
-            [styles.circle]: shape === "circle",
-          },
-          {
-            [styles.secondary]: type === "secondary",
-            [styles[size]]: !!size,
-            [styles.disabled]: isDisabled,
-          },
-          type === "success" && [
-            "geist-themed",
-            "geist-success",
-            "geist-success-fill",
-          ],
-          type === "error" && [
-            "geist-themed",
-            "geist-error",
-            "geist-error-fill",
-          ],
-          type === "warning" && [
-            "geist-themed",
-            "geist-warning",
-            "geist-warning-fill",
-          ],
-          type === "alert" && [
-            "geist-themed",
-            "geist-alert",
-            "geist-alert-fill",
-          ],
-          type === "violet" && [
-            "geist-themed",
-            "geist-violet",
-            "geist-violet-fill",
-          ],
-          className,
-        ])}
-        {...props}
+      <ComponentNew
+        onClick={passthroughOnClick}
+        onMouseEnter={passthroughOnMouseEnter}
         ref={mergeRefs([ref, externalRef])}
+        className={
+          variantNew === "unstyled"
+            ? clsx(styles.base, className)
+            : clsx(
+                styles.base,
+                styles.button,
+                className,
+                type !== "secondary" ? themeType : null,
+                [
+                  {
+                    [styles.secondary]: type === "secondary",
+                    [styles.shape]: shape,
+                    [styles.circle]: shape === "circle",
+                    [styles.loading]: loading,
+                    [styles.small]: size === "small",
+                    [styles.large]: size === "large",
+                  },
+                ],
+                variantNew ? styles[variantNew] : undefined
+              )
+        }
+        style={{
+          ...props.style,
+          minWidth: width,
+          maxWidth: width,
+        }}
+        href={href}
+        as={as}
+        type={typeNameNew}
+        data-hover={!disabled && isHovered ? "" : null}
+        data-active={!disabled && isPressed ? "" : null}
+        data-focus={!disabled && isFocusVisible ? "" : null}
+        data-geist-button=""
+        {...hoverProps}
+        {...focusProps}
+        {...buttonProps}
+        {...props}
       >
-        <IconSizeContext.Provider value={iconSizeContextValue}>
-          {prefix && (
+        <IconSizeContext.Provider value={iconSizeContextValue(size)}>
+          {(prefix || loading) && (
             <span className={styles.prefix}>
               {loading ? (
-                <Spinner size={16} color={"var(--accents-5)"} />
+                <Spinner
+                  size={iconSizeContextValue(size)}
+                  color={"var(--accents-5)"}
+                />
               ) : (
                 prefix
               )}
@@ -160,15 +174,18 @@ const Button: React.ComponentType<Props> = forwardRef(
           )}
           <span
             className={clsx(styles.content, {
-              [styles.grow]: align === "grow",
+              [styles.flex]: svgOnly,
               [styles.start]: align === "start",
+              [styles.grow]: align === "grow",
+              [styles.flexGrow]: align === "flex-grow",
+              [styles.center]: align === "center",
             })}
           >
             {children}
           </span>
           {suffix && <span className={styles.suffix}>{suffix}</span>}
         </IconSizeContext.Provider>
-      </button>
+      </ComponentNew>
     );
   }
 );
