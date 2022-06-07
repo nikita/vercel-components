@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Link } from "../Link";
+import { LinkOld } from "../Link";
 import XIcon from "../../icons/XIcon";
 import { default as useBanner } from "./useBanner";
 import styles from "./Banner.module.css";
@@ -62,7 +62,7 @@ const Banner: React.ComponentType<Props> = ({
         [styles["invert-theme"]]: special,
       })}
     >
-      <Link as={as} href={href}>
+      <LinkOld as={as} href={href}>
         {icon ? <span className={styles.icon}>{icon}</span> : null}
         <span
           className={clsx([
@@ -81,7 +81,7 @@ const Banner: React.ComponentType<Props> = ({
         >
           {linkText || "Learn More"}
         </span>
-      </Link>
+      </LinkOld>
       <button
         className={styles.close}
         aria-label="Hide banner"
