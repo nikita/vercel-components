@@ -18,7 +18,7 @@ interface Props {
   prefetch?: boolean;
 }
 
-const LinkComponent: FCC<Props> = ({
+const LinkOld: FCC<Props> = ({
   href,
   as,
   shallow,
@@ -54,11 +54,12 @@ const LinkComponent: FCC<Props> = ({
       passHref={passHref}
       prefetch={isPrefetch && undefined}
       shallow={shallow}
-      children={text}
-    ></Link>
+    >
+      {text}
+    </Link>
   ) : (
     text
   );
 };
 
-export default LinkComponent;
+export default LinkOld;
