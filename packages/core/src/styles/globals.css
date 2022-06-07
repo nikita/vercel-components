@@ -103,6 +103,7 @@ a.active {
   --header-height: 64px;
   --header-border-bottom: inset 0 -1px 0 0 rgba(0, 0, 0, 0.1);
   --header-background: hsla(0, 0%, 100%, 0.8);
+  --header-import-flow-background: hsla(0, 0%, 98%, 0.8);
   --geist-form-large-font: 1rem;
   --geist-form-large-line-height: 1.5rem;
   --geist-form-large-height: var(--geist-space-large);
@@ -116,9 +117,9 @@ a.active {
 
 /* ---- COLORS ---- */
 
-:root,
-.dark-theme .invert-theme,
-.__LIGHT {
+.dark-theme,
+.dark-theme .geist-disabled .geist-disabled-skip,
+.invert-theme {
   --geist-foreground: #000000;
   --geist-background: #ffffff;
   --geist-selection: var(--geist-cyan-light);
