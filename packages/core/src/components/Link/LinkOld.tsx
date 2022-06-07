@@ -3,7 +3,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import { UrlObject } from "url";
 import { FCC } from "../../react";
-import styles from "./Link.module.css";
+import styles from "./LinkOld.module.css";
 
 declare type Url = string | UrlObject;
 
