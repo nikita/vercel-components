@@ -1,11 +1,7 @@
 import { createContext } from "react";
 
-export interface IThemeContext {
-  size: number;
-}
+const IconSizeContext = createContext(24);
 
-const ThemeContext = createContext<IThemeContext>({
-  size: 24,
-});
+IconSizeContext.displayName = "IconSizeContext";
 
-export default ThemeContext;
+export default IconSizeContext;

@@ -87,7 +87,7 @@ const Banner: React.ComponentType<Props> = ({
         aria-label="Hide banner"
         onClick={handleClose}
       >
-        <IconSizeContext.Provider value={{ size: 18 }}>
+        <IconSizeContext.Provider value={18}>
           <XIcon />
         </IconSizeContext.Provider>
       </button>

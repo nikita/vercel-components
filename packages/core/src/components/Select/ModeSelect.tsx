@@ -12,7 +12,7 @@ import styles from "./Select.module.css";
 const ModeSelect = () => {
   const { selectTheme, mode } = useTheme();
   return (
-    <IconSizeContext.Provider value={{ size: 16 }}>
+    <IconSizeContext.Provider value={16}>
       <div className={styles.container}>
         <span className={styles.prefix}>
           {mode === "dark" && <Moon />}

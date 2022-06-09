@@ -144,7 +144,7 @@ export const MenuItem: FCC<MenuItemProps> = ({
         setSelected(idx);
       }}
     >
-      <IconSizeContext.Provider value={{ size: 18 }}>
+      <IconSizeContext.Provider value={18}>
         {prefix && (
           <span className={classes.prefix} aria-hidden={true}>
             {prefix}

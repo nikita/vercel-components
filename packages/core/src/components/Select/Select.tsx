@@ -14,11 +14,13 @@ interface Props {
   disabled?: boolean;
   label?: string;
   width?: string;
-  suffix?: string;
-  prefix?: string;
+  suffix?: any;
+  prefix?: any;
   placeholder?: string;
   type?: string;
   size?: string;
+
+  value?: any;
 }
 
 const getThemedClasses = (type, e = null, n = null) =>
@@ -70,7 +72,7 @@ const Select: FCC<Props> = ({
         })}
         data-geist-select=""
       >
-        <IconSizeContext.Provider value={{ size: 18 }}>
+        <IconSizeContext.Provider value={18}>
           {prefix && <span className={styles.prefix}>{prefix}</span>}
           <select
             className={clsx(styles.select, {

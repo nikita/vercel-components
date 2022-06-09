@@ -11,8 +11,8 @@ export const AlertTriangle = ({
   return (
     <svg
       viewBox="0 0 24 24"
-      width={size || iconSize.size}
-      height={size || iconSize.size}
+      width={size || iconSize}
+      height={size || iconSize}
       stroke="currentColor"
       strokeWidth="1.5"
       strokeLinecap="round"
