@@ -1,29 +1,7 @@
-import React from "react";
+import { Icon } from "../components/Icon";
 
-import { useIconSize } from "../contexts/IconSizeContext";
-import { Props } from "./props";
-
-const AlignRight = ({ color = "currentcolor", size }: Props) => {
-  const iconSize = useIconSize();
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width={size || iconSize}
-      height={size || iconSize}
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill="none"
-      shapeRendering="geometricPrecision"
-      style={{ color }}
-    >
-      <path d="M21 10H7" />
-      <path d="M21 6H3" />
-      <path d="M21 14H3" />
-      <path d="M21 18H7" />
-    </svg>
-  );
-};
+const AlignRight = Icon(
+  '<path d="M21 10H7"/><path d="M21 6H3"/><path d="M21 14H3"/><path d="M21 18H7"/>'
+);
 
 export default AlignRight;

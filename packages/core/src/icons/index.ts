@@ -44,5 +44,3 @@ export { default as UploadCloud } from "./UploadCloud";
 export { default as UserIcon } from "./UserIcon";
 export { default as XCircle } from "./XCircle";
 export { default as XIcon } from "./XIcon";
-export { FacebookIcon } from "./FacebookIcon";
-export { GoogleIcon } from "./GoogleIcon";

@@ -1,25 +1,9 @@
-import React from "react";
+import { Icon } from "../components/Icon";
 
-import { useIconSize } from "../contexts/IconSizeContext";
-import { Props } from "./props";
+const DividerIcon =
+  // @ts-ignore
+  Icon('<path d="M16.88 3.549L7.12 20.451"/>', false, {
+    color: "var(--accents-2)",
+  });
 
-const DividerIcon = ({ color = "currentcolor", size }: Props) => {
-  const iconSize = useIconSize();
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width={size || iconSize}
-      height={size || iconSize}
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill="none"
-      shapeRendering="geometricPrecision"
-      style={{ color }}
-    >
-      <path d="M16.88 3.549L7.12 20.451" />
-    </svg>
-  );
-};
 export default DividerIcon;

@@ -19,6 +19,7 @@ export * from "./components/Error";
 export * from "./components/Fieldset";
 export * from "./components/FileTree";
 // export * from "./components/Image";
+export * from "./components/Icon";
 export * from "./components/Input";
 export * from "./components/KeyboardInput";
 export * from "./components/Label";

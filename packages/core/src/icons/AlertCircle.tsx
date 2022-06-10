@@ -1,28 +1,13 @@
-import React from "react";
+import { Icon } from "../components/Icon";
 
-import { useIconSize } from "../contexts/IconSizeContext";
-import { Props } from "./props";
-
-const AlertCircle = ({ color = "currentColor", size }: Props) => {
-  const iconSize = useIconSize();
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width={size || iconSize}
-      height={size || iconSize}
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill="none"
-      shapeRendering="geometricPrecision"
-      style={{ color }}
-    >
-      <circle cx="12" cy="12" r="10" fill="var(--geist-fill)" />
-      <path d="M12 8v4" stroke="var(--geist-stroke)" />
-      <path d="M12 16h.01" stroke="var(--geist-stroke)" />
-    </svg>
-  );
-};
+const AlertCircle = Icon(
+  '<circle cx="12" cy="12" r="10" fill="var(--geist-fill)"/><path d="M12 8v4" stroke="var(--geist-stroke)"/><path d="M12 16h.01" stroke="var(--geist-stroke)"/>',
+  true,
+  // @ts-ignore
+  {
+    color: "var(--geist-warning)",
+    secondary: "var(--geist-background)",
+  }
+);
 
 export default AlertCircle;
