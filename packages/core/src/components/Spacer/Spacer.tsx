@@ -1,31 +1,36 @@
-import React from "react";
+import { FC, memo } from "react";
+import clsx from "clsx";
+
 interface Props {
   y?: number;
   x?: number;
+  expand?: boolean;
+  className?: string;
+  inline?: boolean;
+  padding?: string;
 }
-/**
- * y * 24
- */
-const Spacer: React.ComponentType<Props> = ({ y = 1, x = 1 }) => {
-  return (
-    <span aria-hidden="true" className="geist-spacer">
-      <style jsx>{`
-        .geist-spacer {
-          display: block;
-          width: 1px;
-          height: 1px;
-          min-width: 1px;
-          min-height: 1px;
-          margin-left: calc(${24 * x}px - 1px);
-          margin-top: calc(${24 * y}px - 1px);
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;
-        }
-      `}</style>
-    </span>
-  );
-};
+
+const Spacer: FC<Props> = memo(
+  ({ x = 1, y = 1, expand, className, inline, padding }) => {
+    return (
+      <span
+        aria-hidden="true"
+        className={clsx("geist-spacer", className, {
+          padding,
+          inline,
+          expand,
+        })}
+        style={{
+          marginLeft: x !== 1 ? x * 24 - 1 : undefined,
+          marginTop: y === 1 || inline ? undefined : 24 * y - 1,
+          paddingLeft: padding ? x * 24 - 1 : undefined,
+          paddingTop: padding && !inline ? y * 24 - 1 : undefined,
+        }}
+      ></span>
+    );
+  }
+);
+
+Spacer.displayName = "Spacer";
 
 export default Spacer;
