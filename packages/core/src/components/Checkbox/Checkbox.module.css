@@ -3,7 +3,12 @@
   align-items: flex-start;
   font-size: 0.875rem;
 }
-.container.disabled {
+
+.fullWidth {
+  width: 100%;
+}
+
+.disabled {
   cursor: not-allowed;
   color: var(--accents-3);
 }
@@ -15,16 +20,12 @@
   margin: -2px;
 }
 
-.geist-sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+.text {
+  margin-left: var(--geist-gap-quarter);
+}
+
+.fullWidth .text {
+  flex: 1 1;
 }
 
 .icon {
@@ -38,20 +39,39 @@
   transform: rotate(0.000001deg);
 }
 
-.input:checked + .icon {
-  --checkbox-color: var(--geist-foreground);
-  background: var(--checkbox-color);
-}
-.input:disabled + .icon {
-  --checkbox-color: var(--accents-3);
-}
-
 .icon svg {
   position: absolute;
   top: -1px;
   left: -1px;
 }
 
-.text {
-  margin-left: var(--geist-gap-quarter);
+.icon svg line {
+  transition: stroke 0.15s ease;
+}
+
+.input:checked + .icon {
+  --checkbox-color: var(--geist-foreground);
+  background: var(--checkbox-color);
+}
+
+.input:disabled + .icon {
+  --checkbox-color: var(--accents-3);
+}
+
+.input:disabled:not(:checked) + .icon {
+  background: var(--accents-1);
+}
+
+@media (hover: hover) {
+  .input:not(:disabled):hover + .icon {
+    --checkbox-color: var(--geist-foreground);
+  }
+}
+
+.input:not(:disabled):not(:checked):active + .icon {
+  background: var(--accents-2);
+}
+
+.input[data-focus-visible-added] + .icon {
+  box-shadow: 0 0 0 2px var(--geist-background), 0 0 0 4px var(--accents-3);
 }
