@@ -1,15 +1,18 @@
-import { useContext, memo } from "react";
+import { memo, DetailedHTMLProps, SelectHTMLAttributes } from "react";
 import clsx from "clsx";
 import { useId } from "@react-aria/utils";
-import ChevronDown from "../../icons/ChevronDown";
 import { FCC } from "../../react";
 import { Label } from "../Label";
 import { IconSizeContext } from "../../contexts/IconSizeContext";
-import { DisabledContext } from "../../contexts/DisabledContext";
-
+import { useDisabled } from "../../contexts/DisabledContext";
+import ChevronDown from "../../icons/ChevronDown";
 import styles from "./Select.module.css";
 
-interface Props {
+type newAttributes = Omit<SelectHTMLAttributes<HTMLSelectElement>, "size"> & {
+  size?: string;
+};
+
+interface Props extends DetailedHTMLProps<newAttributes, HTMLSelectElement> {
   className?: string;
   disabled?: boolean;
   label?: string;
@@ -18,7 +21,6 @@ interface Props {
   prefix?: any;
   placeholder?: string;
   type?: string;
-  size?: string;
 
   value?: any;
 }
@@ -32,11 +34,6 @@ const getThemedClasses = (type, e = null, n = null) =>
         n ? `geist-${type}-${n}` : null,
       ]
     : "";
-
-const withDisabled = (disabled?: boolean) => {
-  const ctxDisabled = useContext(DisabledContext);
-  return disabled ? disabled : ctxDisabled;
-};
 
 const Select: FCC<Props> = ({
   className,
@@ -52,20 +49,21 @@ const Select: FCC<Props> = ({
   ...props
 }) => {
   const selectId = "select-" + useId();
-  const ctxDisabled = withDisabled(disabled);
+  const ctxDisabled = useDisabled(disabled);
+
+  const isCustomLabel = Boolean(label);
+  const LabelComponent = isCustomLabel ? Label : "label";
+  const labelProps = isCustomLabel
+    ? {
+        value: label,
+        withInput: true,
+        wrapperClassName: className,
+        id: selectId,
+      }
+    : { className, htmlFor: selectId };
 
   return (
-    <Label
-      {...(label
-        ? {
-            value: label,
-            withInput: true,
-            wrapperClassName: className,
-            id: selectId,
-          }
-        : { className, htmlFor: selectId })}
-      style={{ width }}
-    >
+    <LabelComponent {...labelProps} style={{ width }}>
       <div
         className={clsx(styles.container, getThemedClasses(type), {
           [styles.disabled]: ctxDisabled,
@@ -98,7 +96,7 @@ const Select: FCC<Props> = ({
           </span>
         </IconSizeContext.Provider>
       </div>
-    </Label>
+    </LabelComponent>
   );
 };
 
