@@ -1,7 +1,6 @@
 // Contexts
 export * from "./contexts/DisabledContext";
 export * from "./contexts/IconSizeContext";
-export * from "./contexts/ThemeContext";
 
 // Components
 export * from "./components/Avatar";
