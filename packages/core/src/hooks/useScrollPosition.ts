@@ -13,7 +13,7 @@ function getScrollPosition(): ScrollPosition {
     : { x: 0, y: 0 };
 }
 
-const useScrollPosition = (): ScrollPosition => {
+export const useScrollPosition = (): ScrollPosition => {
   const [position, setScrollPosition] = useState<ScrollPosition>(
     getScrollPosition()
   );
@@ -38,5 +38,3 @@ const useScrollPosition = (): ScrollPosition => {
 
   return position;
 };
-
-export default useScrollPosition;

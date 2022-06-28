@@ -1,9 +1,9 @@
 import React, { FC, memo } from "react";
 import clsx from "clsx";
-import { useId } from "@react-aria/utils";
 import { Label } from "../Label";
+import { useId } from "../../hooks";
 import { useDisabled } from "../../contexts/DisabledContext";
-import styles from "./Checkbox.module.css";
+import styles from "./checkbox.module.css";
 
 const CheckedIcon = () => (
   <path
@@ -52,7 +52,7 @@ const Checkbox: FC<Props> = ({
   fullWidth,
   ...props
 }) => {
-  const checkboxId = "select-" + useId();
+  const checkboxId = useId("checkbox-");
   const ctxDisabled = useDisabled() || disabled;
 
   const CheckboxContainer = label ? Label : React.Fragment;

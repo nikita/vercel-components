@@ -1,6 +1,6 @@
 import { memo, DetailedHTMLProps, SelectHTMLAttributes } from "react";
 import clsx from "clsx";
-import { useId } from "@react-aria/utils";
+import { useId } from "../../hooks";
 import { FCC } from "../../react";
 import { Label } from "../Label";
 import { IconSizeContext } from "../../contexts/IconSizeContext";
@@ -48,7 +48,7 @@ const Select: FCC<Props> = ({
   children,
   ...props
 }) => {
-  const selectId = "select-" + useId();
+  const selectId = useId("select-");
   const ctxDisabled = useDisabled(disabled);
 
   const isCustomLabel = Boolean(label);

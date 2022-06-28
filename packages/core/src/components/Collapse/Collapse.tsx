@@ -9,10 +9,9 @@ import {
   memo,
   useMemo,
 } from "react";
-import { useId } from "@react-aria/utils";
 import { FocusRing } from "@react-aria/focus";
-
 import { Text } from "../Text";
+import { useId } from "../../hooks";
 import styles from "./Collapse.module.css";
 import ChevronDown from "../../icons/ChevronDown";
 import { FCC } from "../../react";
@@ -81,7 +80,7 @@ const Collapse: FCC<Props> = memo(
         <Text as={isSmall ? "h5" : "h3"} weight={isSmall ? 500 : 600}>
           <FocusRing focusRingClass={"focus-visible"}>
             <button
-              id={`collapse-button-${useId()}`}
+              id={useId("collapse-button-")}
               /**
                * [aria-*] attributes do not have valid values
                */

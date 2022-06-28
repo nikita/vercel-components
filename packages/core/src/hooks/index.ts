@@ -1,3 +1,4 @@
-export { default as useIntersectionObserver } from "./useIntersectionObserver";
-export { default as useMediaQuery } from "./useMediaQuery";
-export { default as useScrollPosition } from "./useScrollPosition";
+export * from "./useId";
+export * from "./useIntersectionObserver";
+export * from "./useMediaQuery";
+export * from "./useScrollPosition";

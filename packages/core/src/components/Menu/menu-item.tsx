@@ -5,7 +5,7 @@ import React, {
   Fragment,
 } from "react";
 import clsx from "clsx";
-import { useId } from "@react-aria/utils";
+import { useId } from "../../hooks";
 import { FCC } from "../../react";
 
 import { useMenu } from "./menu-context";

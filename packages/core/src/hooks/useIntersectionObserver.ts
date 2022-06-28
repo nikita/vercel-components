@@ -5,9 +5,9 @@ import type { MutableRefObject } from "react";
  * For now, this hook will trigger once, setting
  * `isIntersecting` to `true` and disconnect.
  */
-export default function useIntersectionObserver(
+export const useIntersectionObserver = (
   options: IntersectionObserverInit = {}
-): [boolean, { ref: MutableRefObject<undefined> }] {
+): [boolean, { ref: MutableRefObject<undefined> }] => {
   const ref = useRef();
   const [isIntersecting, setIsIntersecting] = useState(false);
 
@@ -32,4 +32,4 @@ export default function useIntersectionObserver(
   }, [io]);
 
   return [isIntersecting, { ref }];
-}
+};

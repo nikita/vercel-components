@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
  * @param {string} query
  * @returns {boolean} a true/false value for if the media query is matched or not
  */
-const useMediaQuery = (query: string) => {
+export const useMediaQuery = (query: string) => {
   const [state, setState] = useState(false);
   useEffect(() => {
     const mediaQueryList: MediaQueryList = window?.matchMedia(query);
@@ -21,4 +21,3 @@ const useMediaQuery = (query: string) => {
   }, [query]);
   return state;
 };
-export default useMediaQuery;
