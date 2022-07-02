@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { FCC } from "../../react";
+import { formatPx } from "../../utils/formatPx";
 import styles from "./skeleton.module.css";
 
 interface Props {
@@ -16,8 +17,6 @@ interface Props {
   vcenter?: boolean;
   autoSize?: boolean;
 }
-
-const formatPX = (x) => (typeof x === "number" ? `${x}px` : x);
 
 const Skeleton: FCC<Props> = ({
   width = 24,
@@ -52,8 +51,8 @@ const Skeleton: FCC<Props> = ({
         shouldWrap
           ? style
           : {
-              width: formatPX(width),
-              minHeight: formatPX(height),
+              width: formatPx(width),
+              minHeight: formatPx(height),
               marginBottom: (vcenter ? margin / 2 : margin) || undefined,
               marginTop: (vcenter ? margin / 2 : undefined) || undefined,
               ...style,
