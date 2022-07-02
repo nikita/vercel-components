@@ -1,37 +1,32 @@
-import React from "react";
+import { CSSProperties } from "react";
+import clsx from "clsx";
+import { formatPx } from "../../utils/formatPx";
 import styles from "./spinner.module.css";
 
 interface SpinnerProps {
-  size?: number;
   color?: string;
+  className?: string;
+  size?: number;
 }
 
-const Spinner = ({ size = 20, color }: SpinnerProps) => {
+const bars = Array(12).fill(0);
+
+const Spinner = ({ color, className, size = 20 }: SpinnerProps) => {
   return (
     <div
       className={styles.wrapper}
       data-geist-spinner=""
-      style={{
-        // @ts-ignore
-        "--spinner-size": `${size}px`,
-        "--spinner-color": color,
-      }}
+      style={
+        {
+          "--spinner-size": formatPx(size),
+          "--spinner-color": color,
+        } as CSSProperties
+      }
     >
-      <div className={styles.spinner}>
-        <div className={styles.bar} />
-        <div className={styles.bar} />
-        <div className={styles.bar} />
-        <div className={styles.bar} />
-
-        <div className={styles.bar} />
-        <div className={styles.bar} />
-        <div className={styles.bar} />
-        <div className={styles.bar} />
-
-        <div className={styles.bar} />
-        <div className={styles.bar} />
-        <div className={styles.bar} />
-        <div className={styles.bar} />
+      <div className={clsx(styles.spinner, className)}>
+        {bars.map((_, i) => (
+          <div className={styles.bar} {...[`spinner-bar-${i}`]}></div>
+        ))}
       </div>
     </div>
   );
