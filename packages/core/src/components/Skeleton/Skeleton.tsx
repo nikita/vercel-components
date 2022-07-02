@@ -1,7 +1,6 @@
 import React from "react";
 import clsx from "clsx";
 import { FCC } from "../../react";
-
 import styles from "./skeleton.module.css";
 
 interface Props {
@@ -11,47 +10,53 @@ interface Props {
   rounded?: boolean;
   squared?: boolean;
   style?: any;
-  className?: string;
-  autoSize?: boolean;
-  vcenter?: boolean;
   show?: boolean;
+  block?: boolean;
+  className?: string;
+  vcenter?: boolean;
+  autoSize?: boolean;
 }
 
-const isChildNull = (children) => {
-  return !React.Children.count(children);
-};
+const formatPX = (x) => (typeof x === "number" ? `${x}px` : x);
 
 const Skeleton: FCC<Props> = ({
-  children,
   width = 24,
   height = 24,
-  boxHeight,
+  boxHeight = height,
+  rounded,
+  squared,
+  style,
+  show = true,
+  block = true,
+  className,
   vcenter,
-  show,
-  ...props
+  children,
+  autoSize = false,
 }) => {
+  const shouldWrap = autoSize || Boolean(!!children && !(width || height));
+  const margin = shouldWrap ? 0 : Number(boxHeight) - Number(height);
+
   return (
     <span
-      className={clsx(styles.skeleton, {
-        [styles.show]: show !== false,
-        [styles.wrapper]: !isChildNull(children),
-        [styles.rounded]: "rounded" in props,
-        [styles.squared]: "squared" in props,
+      className={clsx(styles.skeleton, className, {
+        [styles.show]: show,
+        [styles.wrapper]: shouldWrap,
+        [styles.loaded]: !shouldWrap && !!children,
+        [styles.inline]: !block,
+        [styles.rounded]: rounded,
+        [styles.squared]: squared,
       })}
+      data-geist-skeleton=""
+      /* data-testid={formatTestId("legacy", "skeleton")} */
       style={
-        !isChildNull(children) || show
-          ? undefined
+        shouldWrap
+          ? style
           : {
-              width: width || 160,
-              minHeight: height,
-              ...(vcenter
-                ? {
-                    marginBottom: `calc(${(boxHeight - height) / 2}px)`,
-                    marginTop: `calc(${(boxHeight - height) / 2}px)`,
-                  }
-                : {
-                    marginBottom: `calc(${(boxHeight || height) - height}px)`,
-                  }),
+              width: formatPX(width),
+              minHeight: formatPX(height),
+              marginBottom: (vcenter ? margin / 2 : margin) || undefined,
+              marginTop: (vcenter ? margin / 2 : undefined) || undefined,
+              ...style,
             }
       }
     >

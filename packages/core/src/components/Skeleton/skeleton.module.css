@@ -20,7 +20,7 @@
 
 .skeleton {
   display: block;
-  border-radius: 5px;
+  border-radius: var(--geist-radius, 5px);
 }
 
 .skeleton.loaded {
@@ -36,7 +36,6 @@
 }
 
 .skeleton:not(.wrapper):not(.loaded) {
-  border-radius: var(--geist-radius);
   background-image: linear-gradient(
     270deg,
     var(--accents-1),
@@ -81,10 +80,10 @@
 
 .squared,
 .squared.wrapper:before {
-  border-radius: 0 !important;
+  border-radius: 0;
 }
 
 .rounded,
 .rounded.wrapper:before {
-  border-radius: 50% !important;
+  border-radius: 50%;
 }
