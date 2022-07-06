@@ -1,1 +1,1 @@
-export const formatPX = (x) => (typeof x === "number" ? `${x}px` : x);
+export const formatPx = (x) => (typeof x === "number" ? `${x}px` : x);
