@@ -1,4 +1,4 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import clsx from "clsx";
 import { forwardRef } from "react";
 
@@ -82,39 +82,44 @@ const Text = forwardRef<unknown, Props>(
       size = 14,
       lineHeight,
       weight,
+      color = "geist-foreground",
       transform,
       align,
-      color = "geist-foreground",
       truncate,
+      wrap = !0,
       className,
-      style = {},
-      title,
-      wrap,
-      dangerouslySetInnerHTML,
-      ...rest
+      style,
+      ...props
     },
     ref: any
   ) => {
     const Tag = as;
-    const s = `s-${size}`;
-    const w = `w-${weight}`;
-    const lh = `lh-${lineHeight}`;
+    const textColor = color === "inherit" ? "inherit" : `var(--${color})`;
+
     return (
       <Tag
-        {...{ ref }}
-        {...{ align }}
-        {...{ title }}
-        {...{ dangerouslySetInnerHTML }}
-        className={clsx(className, styles.wrapper, styles[s], {
-          [styles[w]]: !!weight,
-          [styles[lh]]: !!lh,
-          [styles.truncate]: !!truncate,
-          [styles[transform]]: !!transform,
-          [styles.nowrap]: wrap === false,
+        className={clsx(styles.wrapper, className, {
+          [styles[`s-${size}`]]: size,
+          [styles[`w-${weight}`]]: weight,
+          [styles[`lh-${lineHeight}`]]: lineHeight,
+          [styles[transform]]: transform,
+          [styles[align]]: align,
+          [styles.truncate]: typeof truncate === "boolean",
+          [styles.clamp]: typeof truncate === "number",
+          [styles.nowrap]: !wrap,
         })}
-        // @ts-expect-error
-        style={{ ...style, "--color": `var(--${color})` }}
-        {...rest}
+        style={
+          {
+            ...(typeof truncate === "number" && {
+              "--clamp": truncate,
+            }),
+            ...(color && {
+              "--color": textColor,
+            }),
+            ...style,
+          } as CSSProperties
+        }
+        {...props}
       >
         {children}
       </Tag>
