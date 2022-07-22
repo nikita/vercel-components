@@ -6,15 +6,14 @@
     "url": "https://thekevinwang.com"
   },
   "description": "React components transcribed from the Vercel design system.",
-  "source": "dist/index.js",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "main": "dist/index.mjs",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
     "emit-types": "npx tsc -p tsconfig.build.json",
     "build:swc": "npx swc src --copy-files -d dist && npm run emit-types",
-    "build:babel": "babel src --extensions '.ts','.tsx' --copy-files --no-copy-ignored -d dist --ignore '**/*.test.*' && npm run emit-types",
+    "build:babel": "babel src --extensions '.ts','.tsx' --copy-files --no-copy-ignored -d dist --ignore '**/*.test.*' --out-file-extension '.mjs' && npm run emit-types",
     "prune-dist": "find dist -type f -name '*.test.*' -delete",
     "clean": "rm -rf dist/",
     "prepublishOnly": "npm run clean && npm run build:babel && npm run prune-dist",
