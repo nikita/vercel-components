@@ -49,4 +49,5 @@ export { Code, InlineCode, LI, OL, Text, UL } from "./components/Text";
 export * from "./components/Textarea";
 export * from "./components/Toast";
 export * from "./components/Toggle";
+export * from "./components/Tooltip";
 export * from "./components/Window";
