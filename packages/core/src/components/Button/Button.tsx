@@ -1,6 +1,6 @@
 import React, { FC, forwardRef, useRef, useContext } from "react";
 import clsx from "clsx";
-import mergeRefs from "react-merge-refs";
+import { mergeRefs } from "react-merge-refs";
 import { useHover } from "@react-aria/interactions";
 import { useButton } from "@react-aria/button";
 import { useFocusRing } from "@react-aria/focus";
