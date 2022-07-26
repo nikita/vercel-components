@@ -25,7 +25,7 @@ const Spinner = ({ color, className, size = 20 }: SpinnerProps) => {
     >
       <div className={clsx(styles.spinner, className)}>
         {bars.map((_, i) => (
-          <div className={styles.bar} {...[`spinner-bar-${i}`]}></div>
+          <div key={`spinner-bar-${i}`} className={styles.bar}></div>
         ))}
       </div>
     </div>
