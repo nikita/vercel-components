@@ -19,6 +19,7 @@
   --geist-gap-half: var(--geist-space-gap-half);
   --geist-gap-quarter: var(--geist-space-gap-quarter);
   --geist-gap-double: var(--geist-space-large);
+  --geist-gap-section: var(--geist-space-small);
   --geist-space-negative: -4px;
   --geist-space-2x-negative: -8px;
   --geist-space-4x-negative: -16px;
@@ -39,8 +40,10 @@
   --geist-gap-quarter-negative: var(--geist-space-gap-quarter-negative);
   --geist-gap-double-negative: var(--geist-space-large-negative);
   --geist-page-margin: var(--geist-space-gap);
-  --geist-page-width: 1000px;
-  --geist-page-width-with-margin: 1048px;
+  --geist-page-width: 1200px;
+  --geist-page-width-with-margin: calc(
+    var(--geist-page-width) + calc(2 * var(--geist-page-margin))
+  );
   --geist-radius: 5px;
   --geist-marketing-radius: 8px;
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
