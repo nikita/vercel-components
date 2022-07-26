@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { useId } from "../../hooks";
 import { FCC } from "../../react";
 import { Label } from "../Label";
+import { getThemed } from "../../utils/getThemed";
 import { IconSizeContext } from "../../contexts/IconSizeContext";
 import { useDisabled } from "../../contexts/DisabledContext";
 import ChevronDown from "../../icons/ChevronDown";
@@ -24,16 +25,6 @@ interface Props extends DetailedHTMLProps<newAttributes, HTMLSelectElement> {
 
   value?: any;
 }
-
-const getThemedClasses = (type, e = null, n = null) =>
-  type
-    ? [
-        "geist-themed",
-        `geist-${type}`,
-        e ? `geist-${type}-fill` : null,
-        n ? `geist-${type}-${n}` : null,
-      ]
-    : "";
 
 const Select: FCC<Props> = ({
   className,
@@ -65,7 +56,7 @@ const Select: FCC<Props> = ({
   return (
     <LabelComponent {...labelProps} style={{ width }}>
       <div
-        className={clsx(styles.container, getThemedClasses(type), {
+        className={clsx(styles.container, getThemed(type), {
           [styles.disabled]: ctxDisabled,
         })}
         data-geist-select=""

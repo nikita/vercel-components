@@ -5,6 +5,7 @@ import { useHover } from "@react-aria/interactions";
 import { useButton } from "@react-aria/button";
 import { useFocusRing } from "@react-aria/focus";
 import { Spinner } from "../Spinner";
+import { getThemed } from "../../utils/getThemed";
 import { IconSizeContext } from "../../contexts/IconSizeContext";
 import { DisabledContext } from "../../contexts/DisabledContext";
 import reset from "../../styles/reset/reset.module.css";
@@ -36,16 +37,6 @@ export interface Props extends Omit<IntrinsicProps, "prefix" | "type"> {
   passthroughOnClick?: any;
   passthroughOnMouseEnter?: any;
 }
-
-const getThemedClasses = (type, e = null, n = null) =>
-  type
-    ? [
-        "geist-themed",
-        `geist-${type}`,
-        e ? `geist-${type}-fill` : null,
-        n ? `geist-${type}-${n}` : null,
-      ]
-    : "";
 
 const Button: FC<Props> = forwardRef(
   (
@@ -85,7 +76,7 @@ const Button: FC<Props> = forwardRef(
     const ctxDisabled = useContext(DisabledContext);
     const isDisabled = disabled || loading || ctxDisabled;
 
-    const themeType = getThemedClasses(type, true);
+    const themeType = getThemed(type, true);
     const ref = useRef<HTMLButtonElement>();
     const { focusProps, isFocusVisible } = useFocusRing();
     const { hoverProps, isHovered } = useHover({
