@@ -1,3 +1,5 @@
+export * from "next-themes";
+
 // Contexts
 export * from "./contexts/DisabledContext";
 export * from "./contexts/IconSizeContext";
