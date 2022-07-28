@@ -46,7 +46,7 @@ export * from "./components/Screen";
 // export * from "./components/Table";
 export * from "./components/Tabs";
 export * from "./components/Tag";
-export { Code, InlineCode, LI, OL, Text, UL } from "./components/Text";
+export * from "./components/Text";
 export * from "./components/Textarea";
 export * from "./components/Toast";
 export * from "./components/Toggle";
