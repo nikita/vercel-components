@@ -9,8 +9,8 @@ interface Props {
    * Pixel size of Dots;
    * - defaults to "2px"
    */
-  size?: number;
-  height?: number;
+  size?: number | string;
+  height?: number | string;
 }
 
 /**
