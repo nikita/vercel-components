@@ -1,0 +1,34 @@
+.color {
+  padding: var(--geist-gap);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #000;
+}
+
+.color.dark {
+  color: #fff;
+}
+
+.color div {
+  flex: 1 1;
+}
+
+.color div:last-child {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.placeholder {
+  height: calc(65px + var(--geist-gap-double));
+}
+
+.snippet {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-radius: var(--geist-radius);
+  transition: background 0.2s ease, color 0.2s ease;
+}

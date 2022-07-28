@@ -1,112 +1,98 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import clsx from "clsx";
+import { GeistText } from "../../components/Text";
+import { useToasts } from "../../components/Toast";
+import { useTheme } from "next-themes";
+import styles from "./color-card.module.css";
 
-import { getContrast } from "../../utils/getContrast";
-import { useToasts } from "../Toast";
+const rgbToHex = (rgb: string) =>
+  rgb
+    .replace(
+      /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
+      (_, r, g, b) => `#${r}${r}${g}${g}${b}${b}`
+    )
+    .substring(1)
+    .match(/.{2}/g)
+    .map((hex) => parseInt(hex, 16));
 
-import { Color } from "../../styles/Color";
-import { useTheme } from "../../contexts/ThemeContext";
+const getRGB = (rgb: string) => {
+  if (!rgb) return false;
+  let b = rgbToHex(rgb);
+  return (299 * b[0] + 587 * b[1] + 114 * b[2]) / 1000 < 128;
+};
 
-function componentToHex(c: string) {
-  const hex = parseInt(c, 10).toString(16);
-  return hex.length == 1 ? "0" + hex : hex;
-}
+const useLoading = () => {
+  const [loading, setLoading] = useState(false);
+  useEffect(() => setLoading(true), []);
+  return loading;
+};
 
-function rgbToHex(r, g, b) {
-  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-}
+const computeBgColor = (variable: string) =>
+  window
+    .getComputedStyle(document.documentElement)
+    .getPropertyValue(variable.replace("var(", "").replace(")", ""))
+    .trim();
 
-function getRGB(elem: HTMLElement): [string, string, string] | [] {
-  if (typeof window === "undefined") return [];
-  if (!elem) return [];
-  return (
-    (getComputedStyle(elem, null)
-      ?.getPropertyValue("background-color")
-      ?.replace(/[^\d,]/g, "")
-      ?.split(",") as [string, string, string]) ?? []
-  );
-}
-
-const ColorCard = ({ color }: { color: Color }) => {
-  const varColor = `var(${color})`;
+const ColorCardSnippet = ({ text }: { text: string }) => {
   const toasts = useToasts();
-  const { mode } = useTheme();
 
-  const ref = useRef();
-  const [hex, setHex] = useState("");
+  const copyCb = useCallback(() => {
+    navigator.clipboard.writeText(text);
+    toasts.success(`Copied \`${text}\` to clipboard!`);
+  }, [toasts, text]);
+
+  return (
+    <span className={styles.snippet} onClick={copyCb}>
+      <GeistText Component="p" code={true} small={true}>
+        {text}
+      </GeistText>
+    </span>
+  );
+};
+
+const ColorCard = ({
+  name,
+  variable,
+  dark,
+}: {
+  name: string;
+  variable: string;
+  dark?: boolean;
+}) => {
+  const loading = useLoading();
+  const { theme } = useTheme();
+  const [bgColor, setBgColor] = useState(computeBgColor(variable));
 
   useEffect(() => {
-    // timeout is a hack
-    const timer = setTimeout(() => {
-      const [r, g, b] = getRGB(ref.current);
-      setHex(rgbToHex(r, g, b));
-    }, 0);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [ref.current, mode]);
+    setTimeout(() => setBgColor(computeBgColor(variable)), 1);
+  }, [theme, variable]);
 
-  return (
-    <div ref={ref} className={"colorcard"}>
+  const bgColorHex = dark ? dark : getRGB(bgColor);
+
+  return loading ? (
+    <div
+      className={clsx(styles.color, {
+        [styles.dark]: bgColorHex,
+      })}
+      style={{ backgroundColor: bgColor }}
+    >
       <div>
-        <span
-          className={"card_snippet"}
-          aria-label="Copy text to clipboard"
-          onClick={() => {
-            navigator.clipboard.writeText(varColor);
-            toasts.current?.success({
-              text: `Copied \`${varColor}\` to clipboard!`,
-            });
-          }}
-        >
-          <p className={clsx("geist-text", "geist-text-mono")}>{varColor}</p>
-        </span>
+        <div>
+          <GeistText h4={true} noMargin={true}>
+            {name}
+          </GeistText>
+        </div>
+
+        <div>
+          <ColorCardSnippet text={variable} />
+        </div>
+        <div>
+          <ColorCardSnippet text={bgColor.toUpperCase()} />
+        </div>
       </div>
-      <div>
-        <span
-          className={"card_snippet"}
-          aria-label="Copy text to clipboard"
-          onClick={() => {
-            navigator.clipboard.writeText(hex.toUpperCase());
-            toasts.current?.success({
-              text: `Copied \`${hex.toUpperCase()}\` to clipboard!`,
-            });
-          }}
-        >
-          <p className={clsx("geist-text", "geist-text-mono")}>
-            {hex.toUpperCase()}
-          </p>
-        </span>
-      </div>
-      <style jsx>{`
-        .colorcard {
-          font-size: 14px;
-          color: ${getContrast(hex)};
-          background: var(${color});
-          padding: var(--geist-gap);
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-        .colorcard:first-of-type {
-          border-top-left-radius: calc(var(--geist-radius) - 1px);
-          border-top-right-radius: calc(var(--geist-radius) - 1px);
-        }
-        .colorcard:last-of-type {
-          border-bottom-left-radius: calc(var(--geist-radius) - 1px);
-          border-bottom-right-radius: calc(var(--geist-radius) - 1px);
-        }
-        .card_snippet {
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 0.5rem 1rem;
-          border-radius: var(--geist-radius);
-          transition: background 0.2s ease, color 0.2s ease;
-        }
-      `}</style>
     </div>
+  ) : (
+    <div className={styles.placeholder} />
   );
 };
 
