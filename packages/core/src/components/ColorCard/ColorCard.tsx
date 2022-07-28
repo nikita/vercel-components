@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { GeistText } from "../../components/Text";
 import { useToasts } from "../../components/Toast";
 import { useTheme } from "next-themes";
+import { useMounted } from "../../hooks";
 import styles from "./color-card.module.css";
 
 const rgbToHex = (rgb: string) =>
@@ -19,12 +20,6 @@ const getRGB = (rgb: string) => {
   if (!rgb) return false;
   let b = rgbToHex(rgb);
   return (299 * b[0] + 587 * b[1] + 114 * b[2]) / 1000 < 128;
-};
-
-const useLoading = () => {
-  const [loading, setLoading] = useState(false);
-  useEffect(() => setLoading(true), []);
-  return loading;
 };
 
 const computeBgColor = (variable: string) =>
@@ -59,7 +54,7 @@ const ColorCard = ({
   variable: string;
   dark?: boolean;
 }) => {
-  const loading = useLoading();
+  const mounted = useMounted();
   const { theme } = useTheme();
   const [bgColor, setBgColor] = useState(computeBgColor(variable));
 
@@ -69,7 +64,7 @@ const ColorCard = ({
 
   const bgColorHex = dark ? dark : getRGB(bgColor);
 
-  return loading ? (
+  return mounted ? (
     <div
       className={clsx(styles.color, {
         [styles.dark]: bgColorHex,

@@ -1,7 +1,7 @@
-import React from "react";
-import { useEffect, useState, memo } from "react";
-import NextImage from "next/image";
+import React, { useEffect, useState, memo } from "react";
 import clsx from "clsx";
+import NextImage from "next/image";
+import { useMounted } from "../../hooks";
 
 interface ImageProps {
   alt?: string;
@@ -13,10 +13,7 @@ interface ImageProps {
  * used for local preview
  */
 const Image = memo(({ src, alt, width, height }: ImageProps) => {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   return (
     <figure className={clsx({ ["show"]: mounted })}>
