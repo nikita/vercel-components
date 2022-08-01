@@ -1,10 +1,7 @@
 {
-  "name": "nextjs-components",
+  "name": "core",
   "version": "0.7.0",
-  "author": {
-    "name": "Kevin Wang",
-    "url": "https://thekevinwang.com"
-  },
+  "author": "никита",
   "description": "React components transcribed from the Vercel design system.",
   "main": "dist/index.mjs",
   "module": "dist/index.mjs",
@@ -20,14 +17,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nextjs-components/nextjs-components.git"
+    "url": "git+https://github.com/nikita/vercel-components.git"
   },
   "keywords": [],
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nextjs-components/nextjs-components/issues"
-  },
-  "homepage": "https://github.com/nextjs-components/nextjs-components#readme",
+  "license": "MIT",
   "dependencies": {
     "@reach/portal": "^0.17.0",
     "@react-aria/button": "^3.5.1",
@@ -65,8 +58,9 @@
     "typescript": "^4.7.4"
   },
   "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
     "next": ">=10.x",
-    "react": "^18.2.0",
     "styled-jsx": "^5.0.2"
   }
 }
