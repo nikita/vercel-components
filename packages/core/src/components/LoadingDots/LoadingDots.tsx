@@ -1,7 +1,7 @@
 import { CSSProperties } from "react";
 import clsx from "clsx";
 import { FCC } from "../../react";
-import { formatPx } from "../../utils/formatPx";
+import { toPixels } from "@utils/toPixels";
 import styles from "./LoadingDots.module.css";
 
 interface Props {
@@ -27,15 +27,15 @@ const LoadingDots: FCC<Props> = ({ size = 2, height, children }) => {
       data-geist-loading-dots=""
       style={
         {
-          "--loading-dots-height": height ? formatPx(height) : undefined,
-          "--loading-dots-size": size !== 2 ? formatPx(size) : undefined,
+          "--loading-dots-height": height ? toPixels(height) : undefined,
+          "--loading-dots-size": size !== 2 ? toPixels(size) : undefined,
         } as CSSProperties
       }
     >
       {children && <div className={styles.spacer}>{children}</div>}
-      <span></span>
-      <span></span>
-      <span></span>
+      <span />
+      <span />
+      <span />
     </span>
   );
 };

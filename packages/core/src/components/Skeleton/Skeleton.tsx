@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { FCC } from "../../react";
-import { formatPx } from "../../utils/formatPx";
+import { toPixels } from "@utils/toPixels";
 import styles from "./skeleton.module.css";
 
 interface Props {
@@ -51,8 +51,8 @@ const Skeleton: FCC<Props> = ({
         shouldWrap
           ? style
           : {
-              width: formatPx(width),
-              minHeight: formatPx(height),
+              width: toPixels(width),
+              minHeight: toPixels(height),
               marginBottom: (vcenter ? margin / 2 : margin) || undefined,
               marginTop: (vcenter ? margin / 2 : undefined) || undefined,
               ...style,

@@ -1,6 +1,6 @@
 import { CSSProperties } from "react";
 import clsx from "clsx";
-import { formatPx } from "../../utils/formatPx";
+import { toPixels } from "@utils/toPixels";
 import styles from "./spinner.module.css";
 
 interface SpinnerProps {
@@ -18,7 +18,7 @@ const Spinner = ({ color, className, size = 20 }: SpinnerProps) => {
       data-geist-spinner=""
       style={
         {
-          "--spinner-size": formatPx(size),
+          "--spinner-size": toPixels(size),
           "--spinner-color": color,
         } as CSSProperties
       }
