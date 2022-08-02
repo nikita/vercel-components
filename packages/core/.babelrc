@@ -12,6 +12,19 @@
     ]
   ],
   "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "@components": "./src/components",
+          "@contexts": "./src/contexts",
+          "@hooks": "./src/hooks",
+          "@icons": "./src/icons",
+          "@styles": "./src/styles",
+          "@utils": "./src/utils"
+        }
+      }
+    ]
     // ["styled-jsx/babel", { "optimizeForSpeed": true }]
   ]
 }

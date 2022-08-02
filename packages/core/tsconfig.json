@@ -2,7 +2,13 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "*": ["src/*"]
+      "*": ["src/*"],
+      "@components/*": ["components/*"],
+      "@contexts/*": ["contexts/*"],
+      "@hooks/*": ["hooks/*"],
+      "@icons/*": ["icons/*"],
+      "@styles/*": ["styles/*"],
+      "@utils/*": ["utils/*"]
     },
     "outDir": "dist",
     "target": "ES6",
