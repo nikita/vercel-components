@@ -8,8 +8,8 @@ import { Spinner } from "@components/Spinner";
 import { getThemed } from "@utils/getThemed";
 import { IconSizeContext } from "@contexts/IconSizeContext";
 import { DisabledContext } from "@contexts/DisabledContext";
-import styles from "./button.module.css";
 import reset from "@styles/reset.module.css";
+import styles from "./button.module.css";
 
 type IntrinsicProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
