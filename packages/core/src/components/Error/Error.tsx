@@ -1,14 +1,15 @@
 import React from "react";
 import clsx from "clsx";
 import AlertCircle from "@icons/AlertCircle";
-import { FCC } from "../../react";
 import styles from "./error.module.css";
 
-interface ErrorProps {
+interface Props {
   label?: string;
+  children?: React.ReactNode;
   size?: "small" | "large";
 }
-const Error: FCC<ErrorProps> = ({ label = "Error", children, size }) => {
+
+const Error = ({ label = "Error", children, size }: Props) => {
   return (
     <div
       className={clsx(styles.error, {

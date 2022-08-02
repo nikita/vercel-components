@@ -1,9 +1,10 @@
 import React from "react";
 import clsx from "clsx";
-import { FCC } from "../../react";
 
 type Direction = "column" | "row";
-export interface Props {
+
+interface Props {
+  children?: React.ReactNode;
   flex?: number;
   /**
    * ignored if the `direction` prop is specified
@@ -44,7 +45,7 @@ export interface Props {
   wrapper?: boolean;
 }
 
-const Container: FCC<Props> = ({
+const Container = ({
   children,
   flex = 1,
   row,
@@ -60,7 +61,7 @@ const Container: FCC<Props> = ({
   gap = 1,
   noWrap,
   wrapper,
-}) => {
+}: Props) => {
   let __flex = flex;
   let __justify_content = "flex-start";
   let __align_items = "stretch";

@@ -1,7 +1,6 @@
 import React, { forwardRef, Ref } from "react";
 import Link from "next/link";
 import clsx from "clsx";
-import { FCC } from "../../react";
 import styles from "./Link.module.css";
 //import ExternalLink from "@icons/ExternalLink";
 
@@ -11,6 +10,7 @@ export interface Props {
   external?: string;
   tab?: boolean;
   href?: string;
+  children?: React.ReactNode;
   className?: string;
   ref?: Ref<any>;
 
@@ -33,10 +33,19 @@ const isInternalLink = (href: string | URL) => {
   return !!external;
 };
 
-const LinkComponent: FCC<Props> = forwardRef(
+const LinkComponent = forwardRef(
   (
-    { type, variant, external, tab, href, children, className, ...props },
-    ref
+    {
+      type,
+      variant,
+      external,
+      tab,
+      href,
+      children,
+      className,
+      ...props
+    }: Props,
+    ref: React.ForwardedRef<HTMLAnchorElement>
   ) => {
     const isExternal = href && isInternalLink(href);
 

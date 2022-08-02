@@ -14,7 +14,6 @@ import { Text } from "@components/Text";
 import { useId } from "@hooks";
 import styles from "./Collapse.module.css";
 import ChevronDown from "@icons/ChevronDown";
-import { FCC } from "../../react";
 
 interface ICollapseContext {
   onChange?: (val: string | React.ReactNode) => void;
@@ -40,9 +39,10 @@ interface Props {
   defaultExpanded?: boolean;
   size?: "small";
   card?: boolean;
+  children?: React.ReactNode;
 }
-const Collapse: FCC<Props> = memo(
-  ({ title, subtitle, defaultExpanded, size, card, children }) => {
+const Collapse = memo(
+  ({ title, subtitle, defaultExpanded, size, card, children }: Props) => {
     const isSmall = size === "small";
     // gets ignored if context is present
     const [open, setOpen] = useState<boolean>();

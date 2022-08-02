@@ -18,7 +18,7 @@ interface Props {
   hideTitleOnMobile?: boolean;
 }
 
-const Banner: React.ComponentType<Props> = ({
+const Banner = ({
   title,
   desc,
   href,
@@ -28,7 +28,7 @@ const Banner: React.ComponentType<Props> = ({
   special,
   localStorageKey,
   hideTitleOnMobile,
-}) => {
+}: Props) => {
   const [showBanner, handleClose] = useBanner(localStorageKey);
 
   /*

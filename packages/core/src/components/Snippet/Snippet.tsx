@@ -15,13 +15,7 @@ interface Props {
   type?: "success" | "error" | "warning" | "secondary" | "lite";
   fill?: boolean;
 }
-const Snippet: React.ComponentType<Props> = ({
-  prompt = true,
-  width,
-  text,
-  type,
-  fill,
-}) => {
+const Snippet = ({ prompt = true, width, text, type, fill }: Props) => {
   const toasts = useToasts();
 
   const [focused, setFocused] = useState(false);

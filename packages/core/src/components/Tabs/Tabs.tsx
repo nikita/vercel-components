@@ -1,10 +1,7 @@
 import React from "react";
-import { FCC } from "../../react";
 import styles from "./Tabs.module.css";
 
-interface Props {}
-
-const Tabs: FCC<Props> = ({ children }) => {
+const Tabs = ({ children }: { children?: React.ReactNode }) => {
   return <div className={styles.tabs}>{children}</div>;
 };
 

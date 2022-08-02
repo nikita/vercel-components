@@ -1,14 +1,14 @@
 import React from "react";
 import clsx from "clsx";
 import styles from "./Screen.module.css";
-import { FCC } from "../../react";
 
 interface Props {
   className?: string;
   disableScroll?: boolean;
+  children?: React.ReactNode;
 }
 
-const Screen: FCC<Props> = ({ disableScroll, className, children }) => {
+const Screen = ({ disableScroll, className, children }: Props) => {
   return (
     <div
       className={clsx(styles.geist_screen, className, {

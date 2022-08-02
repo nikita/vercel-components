@@ -2,8 +2,11 @@ import React from "react";
 import clsx from "clsx";
 import styles from "./list.module.css";
 
-type ULProps = React.HTMLAttributes<HTMLUListElement>;
-const UL: React.FC<ULProps> = ({ children, className, ...props }) => {
+const UL = ({
+  children,
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLUListElement>) => {
   return (
     <ul className={clsx(styles.ul, className)} {...props}>
       {children}

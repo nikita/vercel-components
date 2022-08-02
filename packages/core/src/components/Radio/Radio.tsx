@@ -4,19 +4,18 @@ import clsx from "clsx";
 import { useRadioGroup, useRadio } from "@react-aria/radio";
 import { useRadioGroupState } from "@react-stately/radio";
 import { useFocusRing } from "@react-aria/focus";
-import { FCC } from "../../react";
-
 import styles from "./radio.module.css";
 
 let RadioContext = createContext(null);
 
 interface RadioGroupProps {
+  children?: React.ReactNode;
   label: string;
   onChange?: (value: string) => void;
   value?: string;
 }
 
-export const RadioGroup: FCC<RadioGroupProps> = (props) => {
+export const RadioGroup = (props: RadioGroupProps) => {
   let { children, label } = props;
   let state = useRadioGroupState(props);
   let { radioGroupProps, labelProps } = useRadioGroup(props, state);
@@ -32,11 +31,12 @@ export const RadioGroup: FCC<RadioGroupProps> = (props) => {
 };
 
 interface RadioItemProps {
+  children?: React.ReactNode;
   disabled?: boolean;
   value: string;
 }
 
-export const RadioItem: FCC<RadioItemProps> = (props) => {
+export const RadioItem = (props: RadioItemProps) => {
   let { children, disabled } = props;
 
   let { isFocusVisible, focusProps } = useFocusRing();

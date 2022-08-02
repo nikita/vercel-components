@@ -10,7 +10,8 @@ interface Props
     InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   > {}
-const SearchInput: React.ComponentType<Props> = ({ className, ...props }) => {
+
+const SearchInput = ({ className, ...props }: Props) => {
   return (
     <div className={styles.wrapper}>
       <span className={styles.icon}>

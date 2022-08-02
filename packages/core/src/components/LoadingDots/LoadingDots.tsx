@@ -1,6 +1,5 @@
 import { CSSProperties } from "react";
 import clsx from "clsx";
-import { FCC } from "../../react";
 import { toPixels } from "@utils/toPixels";
 import styles from "./LoadingDots.module.css";
 
@@ -11,6 +10,7 @@ interface Props {
    */
   size?: number | string;
   height?: number | string;
+  children?: React.ReactNode;
 }
 
 /**
@@ -20,7 +20,7 @@ interface Props {
  * <LoadingDots size={2}/>
  * ```
  */
-const LoadingDots: FCC<Props> = ({ size = 2, height, children }) => {
+const LoadingDots = ({ size = 2, height, children }: Props) => {
   return (
     <span
       className={clsx(styles.loading)}

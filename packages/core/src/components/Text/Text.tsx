@@ -80,7 +80,7 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
   dangerouslySetInnerHTML?: { __html: string };
 }
 
-const Text: React.FC<Props> = ({
+const Text = ({
   children,
   as: Tag = "p",
   size = 14,
@@ -94,7 +94,7 @@ const Text: React.FC<Props> = ({
   className,
   style,
   ...props
-}) => {
+}: Props) => {
   const textColor = color === "inherit" ? "inherit" : `var(--${color})`;
 
   return (

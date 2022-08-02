@@ -2,9 +2,9 @@ import React from "react";
 import clsx from "clsx";
 import { HTMLAttributes } from "react";
 import styles from "./Badge.module.css";
-import { FCC } from "../../react";
 
 interface Props {
+  children?: React.ReactNode;
   className?: HTMLAttributes<HTMLSpanElement>["className"];
   type?: "success" | "error" | "warning" | "violet" | "secondary";
   variant?: "contrast";
@@ -12,14 +12,14 @@ interface Props {
   size?: "small" | "large";
 }
 
-const Badge: FCC<Props> = ({
+const Badge = ({
   children,
   className,
   type,
   variant,
   outline,
   size,
-}) => {
+}: Props) => {
   return (
     <span
       className={clsx(

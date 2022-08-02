@@ -8,11 +8,7 @@ interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   focused?: boolean;
   errored?: boolean;
 }
-const Textarea: React.ComponentType<Props> = ({
-  disabled,
-  errored,
-  ...props
-}) => {
+const Textarea = ({ disabled, errored, ...props }: Props) => {
   const [focused, setFocused] = useState(false);
   return (
     <div

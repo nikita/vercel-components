@@ -10,9 +10,9 @@ import styles from "./Entity.module.css";
 import EntityField from "./EntityField";
 
 import { PlaceHolderContext } from "./index";
-import { FCC } from "../../react";
 
 interface Props {
+  children?: React.ReactNode;
   placeholder?: boolean;
   thumbnail?: React.ReactElement;
   checkbox?: React.ReactElement;
@@ -21,7 +21,7 @@ interface Props {
   footer?: React.ReactElement;
 }
 
-const Entity: FCC<Props> = ({
+const Entity = ({
   children,
   placeholder,
   thumbnail,
@@ -29,7 +29,7 @@ const Entity: FCC<Props> = ({
   checkbox,
   actions,
   footer,
-}) => {
+}: Props) => {
   const thumbnailWrapOnMobile = thumbnail?.props.wrap;
   return (
     <PlaceHolderContext.Provider value={placeholder}>

@@ -9,7 +9,7 @@ interface TextTypeProps {
   capitalize?: boolean;
   center?: boolean;
   Component?: any;
-  children?: any;
+  children?: React.ReactNode;
   className?: string;
   preset?: string;
   maxWidth?: string | number;
@@ -50,11 +50,11 @@ const ForwardRef = (
         ]
       : null;
 
-  const RefContainer: FC<RefContainerProps> = ({
+  const RefContainer = ({
     className,
     forwardedRef,
     ...props
-  }) => {
+  }: RefContainerProps) => {
     const { type } = props;
     const fill = props.fill || defaultFill;
 
@@ -79,7 +79,7 @@ const applyTextStyles = (
   children: any,
   { mark, underline, strike, bold, italic }: ApplyTextStylesProps
 ) => {
-  function l(applyStyle?: boolean, children?: any, type?: string) {
+  function l(applyStyle?: boolean, children?: React.ReactNode, type?: string) {
     if (applyStyle !== undefined && applyStyle)
       return React.createElement(type!, {}, children || null);
     return children;
@@ -101,7 +101,7 @@ const applyTextStyles = (
 };
 
 const createTextType = (type: string) => {
-  const TextType: FC<TextTypeProps> = ({
+  const TextType = ({
     noMargin,
     weight,
     code,
@@ -115,7 +115,7 @@ const createTextType = (type: string) => {
     maxWidth,
     style,
     ...props
-  }) => {
+  }: TextTypeProps) => {
     return (
       <Component
         className={clsx(
@@ -175,7 +175,7 @@ interface TextProps extends React.HTMLAttributes<HTMLElement> {
   weight?: number | string;
 }
 
-const Text: FC<TextProps> = ({
+const Text = ({
   Component,
   h1,
   h2,
@@ -193,7 +193,7 @@ const Text: FC<TextProps> = ({
   italic,
   children,
   ...props
-}) => {
+}: TextProps) => {
   const ComponentInternal =
     componentTypes[[h1, h2, h3, h4, h5, h6, p, small, span].indexOf(true)] ||
     _p;

@@ -38,7 +38,7 @@ const Icon = (
     viewBox = defaultViewBox,
   }: IIcon = {}
 ) => {
-  const IconWrapper: FC<IconWrapperProps> = ({
+  const IconWrapper = ({
     size = useIconSize() || _size || defaultIconSize,
     color = _color || "currentColor",
     secondary = _secondary || "var(--geist-background)",
@@ -46,7 +46,7 @@ const Icon = (
     fill = _fill,
     align,
     ...props
-  }) => {
+  }: IconWrapperProps) => {
     const weightMemo = React.useMemo(
       () => (weight === "bold" ? 2 : weight === "light" ? 1 : 1.5),
       [weight]

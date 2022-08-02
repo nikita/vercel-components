@@ -1,12 +1,13 @@
 import React from "react";
 import clsx from "clsx";
 import styles from "./window.module.css";
-import { FCC } from "../../react";
 
 interface Props {
   title?: string | JSX.Element;
+  children?: React.ReactNode;
 }
-const Window: FCC<Props> = ({ title, children }) => {
+
+const Window = ({ title, children }: Props) => {
   return (
     <div className={clsx(styles.window, "window")}>
       <style jsx>{`

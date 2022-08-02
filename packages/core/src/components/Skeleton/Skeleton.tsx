@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { FCC } from "../../react";
 import { toPixels } from "@utils/toPixels";
 import styles from "./skeleton.module.css";
 
@@ -15,10 +14,11 @@ interface Props {
   block?: boolean;
   className?: string;
   vcenter?: boolean;
+  children?: React.ReactNode;
   autoSize?: boolean;
 }
 
-const Skeleton: FCC<Props> = ({
+const Skeleton = ({
   width = 24,
   height = 24,
   boxHeight = height,
@@ -31,7 +31,7 @@ const Skeleton: FCC<Props> = ({
   vcenter,
   children,
   autoSize = false,
-}) => {
+}: Props) => {
   const shouldWrap = autoSize || Boolean(!!children && !(width || height));
   const margin = shouldWrap ? 0 : Number(boxHeight) - Number(height);
 

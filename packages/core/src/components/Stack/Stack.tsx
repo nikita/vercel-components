@@ -4,7 +4,7 @@ import styles from "./stack.module.css";
 
 interface Props {
   as?: any;
-  children?: any;
+  children?: React.ReactNode;
   gap?: number | { sm: any; md: any; lg: any };
   direction?: string | { sm: any; md: any; lg: any };
   align?: string;
@@ -53,7 +53,7 @@ function g(e, t) {
   );
 }
 
-const Stack: FC<Props> = forwardRef(
+const Stack = forwardRef(
   (
     {
       as = "div",
@@ -67,7 +67,7 @@ const Stack: FC<Props> = forwardRef(
       style,
       className,
       ...props
-    },
+    }: Props,
     ref
   ) => {
     const Tag = as;

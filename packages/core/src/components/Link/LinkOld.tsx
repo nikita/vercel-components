@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import clsx from "clsx";
 import { UrlObject } from "url";
-import { FCC } from "../../react";
 import styles from "./LinkOld.module.css";
 
 declare type Url = string | UrlObject;
@@ -16,9 +15,10 @@ interface Props {
   underline?: string;
   className?: string;
   prefetch?: boolean;
+  children?: React.ReactNode;
 }
 
-const LinkOld: FCC<Props> = ({
+const LinkOld = ({
   href,
   as,
   shallow,
@@ -29,7 +29,7 @@ const LinkOld: FCC<Props> = ({
   prefetch,
   children,
   ...props
-}) => {
+}: Props) => {
   let isPrefetch = prefetch === null || prefetch;
 
   const hrefPath = typeof href === "string" ? href : href.pathname;

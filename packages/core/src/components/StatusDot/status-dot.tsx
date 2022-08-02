@@ -23,7 +23,7 @@ export interface StatusDotProps {
   label?: boolean;
 }
 
-const StatusDot: React.FC<StatusDotProps> = ({ state, label }) => {
+const StatusDot = ({ state, label }: StatusDotProps) => {
   return (
     <span className={styles.wrapper}>
       <span

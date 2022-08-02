@@ -17,7 +17,7 @@ import styles from "./tooltip.module.css";
 interface Props {
   boxAlign?: string;
   center?: boolean;
-  children?: any;
+  children?: React.ReactNode;
   className?: string;
   cursor?: any;
   delay?: boolean;
@@ -38,7 +38,7 @@ interface Props {
   wrap?: boolean;
 }
 
-const Tooltip: FC<Props> = ({
+const Tooltip = ({
   boxAlign = "center",
   center = true,
   children,
@@ -60,7 +60,7 @@ const Tooltip: FC<Props> = ({
   tip = true,
   type,
   wrap = true,
-}) => {
+}: Props) => {
   const [isShown, setIsShown] = useState(shown);
   const [scrollLocation, setScroll] = useState({
     top: 0,

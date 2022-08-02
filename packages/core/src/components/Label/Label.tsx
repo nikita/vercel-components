@@ -12,7 +12,7 @@ interface Props
   wrapperClassName?: string;
 }
 
-const Label: React.ComponentType<Props> = ({
+const Label = ({
   children,
   className,
   id,
@@ -20,7 +20,7 @@ const Label: React.ComponentType<Props> = ({
   value,
   withInput,
   wrapperClassName,
-}) => {
+}: Props) => {
   return (
     <label className={wrapperClassName} htmlFor={id} style={style}>
       <div

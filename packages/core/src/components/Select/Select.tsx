@@ -1,7 +1,6 @@
 import { memo, DetailedHTMLProps, SelectHTMLAttributes } from "react";
 import clsx from "clsx";
 import { useId } from "@hooks";
-import { FCC } from "../../react";
 import { Label } from "@components/Label";
 import { getThemed } from "@utils/getThemed";
 import { IconSizeContext } from "@contexts/IconSizeContext";
@@ -22,11 +21,10 @@ interface Props extends DetailedHTMLProps<newAttributes, HTMLSelectElement> {
   prefix?: any;
   placeholder?: string;
   type?: string;
-
   value?: any;
 }
 
-const Select: FCC<Props> = ({
+const Select = ({
   className,
   disabled,
   label,
@@ -38,7 +36,7 @@ const Select: FCC<Props> = ({
   size,
   children,
   ...props
-}) => {
+}: Props) => {
   const selectId = useId("select-");
   const ctxDisabled = useDisabled(disabled);
 

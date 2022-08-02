@@ -2,8 +2,11 @@ import React from "react";
 import clsx from "clsx";
 import styles from "./list.module.css";
 
-type OLProps = React.OlHTMLAttributes<HTMLOListElement>;
-const OL: React.FC<OLProps> = ({ children, className, ...props }) => {
+const OL = ({
+  children,
+  className,
+  ...props
+}: React.OlHTMLAttributes<HTMLOListElement>) => {
   return (
     <ol className={clsx(styles.ol, className)} {...props}>
       {children}

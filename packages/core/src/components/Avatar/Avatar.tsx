@@ -6,7 +6,7 @@ interface Props {
   src: string;
 }
 
-const Avatar: React.FC<Props> = ({ size, src }) => {
+const Avatar = ({ size, src }: Props) => {
   return (
     <span className={styles.avatar} style={{ "--size": `${size}px` } as any}>
       <img

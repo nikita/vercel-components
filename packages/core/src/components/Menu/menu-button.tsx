@@ -2,11 +2,7 @@ import React from "react";
 import { Button, ButtonProps } from "@components/Button";
 import { useMenu } from "./menu-context";
 
-export const MenuButton: React.FC<ButtonProps> = ({
-  children,
-  onClick,
-  ...props
-}) => {
+export const MenuButton = ({ children, onClick, ...props }: ButtonProps) => {
   const { menuId, buttonId, buttonRef, setOpen, open } = useMenu();
 
   return (

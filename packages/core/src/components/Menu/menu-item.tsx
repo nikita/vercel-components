@@ -1,21 +1,12 @@
-import React, {
-  useRef,
-  forwardRef,
-  PointerEventHandler,
-  Fragment,
-} from "react";
+import React, { useRef, forwardRef, PointerEventHandler } from "react";
 import clsx from "clsx";
 import { useId } from "@hooks";
-import { FCC } from "../../react";
-
 import { useMenu } from "./menu-context";
-
+import { IconSizeContext } from "@contexts/IconSizeContext";
 import classes from "./Menu.module.css";
 
-import { IconSizeContext } from "@contexts/IconSizeContext";
-
 interface MenuItemInnerProps {
-  children?: any;
+  children?: React.ReactNode;
   Component?: any;
   href?: string;
   "aria-disabled": boolean | "true" | "false";
@@ -90,6 +81,7 @@ export const MenuItemInner: React.ForwardRefExoticComponent<
 MenuItemInner.displayName = "MenuItemInner";
 
 interface MenuItemProps {
+  children?: React.ReactNode;
   disabled?: boolean;
   onClick?: () => void;
   value?: any; // fixme
@@ -100,7 +92,7 @@ interface MenuItemProps {
   suffix?: JSX.Element;
 }
 
-export const MenuItem: FCC<MenuItemProps> = ({
+export const MenuItem = ({
   children,
   onClick,
   type,
@@ -108,7 +100,7 @@ export const MenuItem: FCC<MenuItemProps> = ({
   disabled,
   prefix,
   suffix,
-}) => {
+}: MenuItemProps) => {
   const { setOpen, listRef, selected, setSelected } = useMenu();
 
   const itemRef = useRef<HTMLLIElement>();

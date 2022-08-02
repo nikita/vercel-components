@@ -10,8 +10,8 @@ interface Props {
   padding?: string;
 }
 
-const Spacer: FC<Props> = memo(
-  ({ x = 1, y = 1, expand, className, inline, padding }) => {
+const Spacer = memo(
+  ({ x = 1, y = 1, expand, className, inline, padding }: Props) => {
     return (
       <span
         aria-hidden="true"

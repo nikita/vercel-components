@@ -1,15 +1,10 @@
 import React from "react";
-import { useState, Children } from "react";
 import clsx from "clsx";
-
-import { Badge } from "../Badge";
-import { Checkbox } from "../Checkbox";
-
-import { Scroller } from "../Scroller";
-
+import { Badge } from "@components/Badge";
+import { Checkbox } from "@components/Checkbox";
+import { Scroller } from "@components/Scroller";
 import styles from "./Table.module.css";
-import reset from "../../styles/reset/reset.module.css";
-import { FCC } from "../../react";
+import reset from "@styles/reset.module.css";
 
 interface Cell<T extends any = any>
   extends React.FC<{
@@ -51,6 +46,8 @@ interface Props {
   defaultRows?: number;
   selectable?: boolean;
   fixed?: boolean;
+  children?: React.ReactNode;
+
   headerActions?: (params: HeaderActionParams) => JSX.Element;
   rowActions?: (params: RowActionParams) => JSX.Element;
   width?: React.HTMLAttributes<HTMLDivElement>["style"]["width"];
@@ -58,7 +55,7 @@ interface Props {
   empty?: JSX.Element;
 }
 
-const Table: FCC<Props> = ({
+const Table = ({
   selectable,
   columns = [],
   data = [],
@@ -74,12 +71,12 @@ const Table: FCC<Props> = ({
   empty,
   fixed,
   children,
-}) => {
-  const [idsChecked, setIdsChecked] = useState<string[]>([]);
+}: Props) => {
+  const [idsChecked, setIdsChecked] = React.useState<string[]>([]);
   // console.log(Children.count(children)); // 1
   return (
     <div>
-      {!!Children.count(children) && (
+      {!!React.Children.count(children) && (
         <div className={clsx([styles.filter])}>{children}</div>
       )}
       <div

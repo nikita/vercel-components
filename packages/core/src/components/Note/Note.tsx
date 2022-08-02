@@ -1,9 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import { FCC } from "../../react";
 import styles from "./Note.module.css";
 
 interface Props {
+  children?: React.ReactNode;
   size?: "small" | "large";
   /**
    * action={<Button size="small">Upgrade</Button>}
@@ -31,7 +31,7 @@ const getLabel = (label?: false | string, type?: Props["type"]) => {
   if (type) return labelMap[type];
 };
 
-const Note: FCC<Props> = ({
+const Note = ({
   children,
   size,
   label,
@@ -40,7 +40,7 @@ const Note: FCC<Props> = ({
   fill,
   variant,
   style, // for mdx
-}) => {
+}: Props) => {
   return (
     <div
       {...{ style }}

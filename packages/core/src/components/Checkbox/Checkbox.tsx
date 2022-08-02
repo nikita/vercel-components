@@ -33,7 +33,7 @@ interface Props {
   disabled?: boolean;
   checked?: boolean;
   className?: any;
-  children?: string | JSX.Element;
+  children?: string | React.ReactNode;
   indeterminate?: boolean;
   style?: React.CSSProperties;
   fullWidth?: boolean;
@@ -41,7 +41,7 @@ interface Props {
   onChange?: any;
 }
 
-const Checkbox: FC<Props> = ({
+const Checkbox = ({
   label,
   disabled,
   checked = false,
@@ -51,7 +51,7 @@ const Checkbox: FC<Props> = ({
   style,
   fullWidth,
   ...props
-}) => {
+}: Props) => {
   const checkboxId = useId("checkbox-");
   const ctxDisabled = useDisabled() || disabled;
 
