@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import useIconSize from "../../contexts/IconSizeContext/useIconSize";
+import useIconSize from "@contexts/IconSizeContext/useIconSize";
 
 interface IIcon {
   color?: string;

@@ -1,8 +1,8 @@
 import React, { FC, memo } from "react";
 import clsx from "clsx";
-import { Label } from "../Label";
-import { useId } from "../../hooks";
-import { useDisabled } from "../../contexts/DisabledContext";
+import { Label } from "@components/Label";
+import { useId } from "@hooks";
+import { useDisabled } from "@contexts/DisabledContext";
 import styles from "./checkbox.module.css";
 
 const CheckedIcon = () => (

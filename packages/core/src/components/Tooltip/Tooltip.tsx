@@ -10,8 +10,8 @@ import {
 import clsx from "clsx";
 import Portal from "@reach/portal";
 import { throttle } from "lodash-es";
-import { useId } from "../../hooks";
-import { getThemed } from "../../utils/getThemed";
+import { useId } from "@hooks";
+import { getThemed } from "@utils/getThemed";
 import styles from "./tooltip.module.css";
 
 interface Props {

@@ -8,12 +8,12 @@ import {
   EditorProps,
 } from "react-live";
 
-import { Container } from "../Container";
-import { Details } from "../Details";
-import CopyIcon from "../../icons/CopyIcon";
-import RotateCW from "../../icons/RotateCW";
+import { Container } from "@components/Container";
+import { Details } from "@components/Details";
+import CopyIcon from "@icons/CopyIcon";
+import RotateCW from "@icons/RotateCW";
 
-import { useToasts } from "../Toast";
+import { useToasts } from "@components/Toast";
 
 import styles from "./editor.module.css";
 

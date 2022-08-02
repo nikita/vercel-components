@@ -5,14 +5,14 @@ import React, {
   Fragment,
 } from "react";
 import clsx from "clsx";
-import { useId } from "../../hooks";
+import { useId } from "@hooks";
 import { FCC } from "../../react";
 
 import { useMenu } from "./menu-context";
 
 import classes from "./Menu.module.css";
 
-import { IconSizeContext } from "../../contexts/IconSizeContext";
+import { IconSizeContext } from "@contexts/IconSizeContext";
 
 interface MenuItemInnerProps {
   children?: any;

@@ -3,7 +3,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import { FCC } from "../../react";
 import styles from "./Link.module.css";
-//import ExternalLink from "../../icons/ExternalLink";
+//import ExternalLink from "@icons/ExternalLink";
 
 export interface Props {
   type?: string;

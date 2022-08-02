@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { FocusRing } from "@react-aria/focus";
 
 import styles from "./Toggle.module.css";
-import reset from "../../styles/reset/reset.module.css";
+import reset from "@styles/reset.module.css";
 
 interface Props {
   checked?: boolean;

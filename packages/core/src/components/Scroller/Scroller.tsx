@@ -3,7 +3,7 @@ import { useRef, useEffect, useState } from "react";
 import clsx from "clsx";
 import styles from "./Scroller.module.css";
 import clamp from "lodash/clamp";
-import { isBrowser } from "../../utils/isBrowser";
+import { isBrowser } from "@utils/isBrowser";
 import { FCC } from "../../react";
 
 interface Props {

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import clsx from "clsx";
 import { useFocus } from "@react-aria/interactions";
 
-import CopyIcon from "../../icons/CopyIcon";
-import { useToasts } from "../Toast";
+import CopyIcon from "@icons/CopyIcon";
+import { useToasts } from "@components/Toast";
 
 import styles from "./Snippet.module.css";
 

@@ -10,10 +10,10 @@ import {
   useMemo,
 } from "react";
 import { FocusRing } from "@react-aria/focus";
-import { Text } from "../Text";
-import { useId } from "../../hooks";
+import { Text } from "@components/Text";
+import { useId } from "@hooks";
 import styles from "./Collapse.module.css";
-import ChevronDown from "../../icons/ChevronDown";
+import ChevronDown from "@icons/ChevronDown";
 import { FCC } from "../../react";
 
 interface ICollapseContext {

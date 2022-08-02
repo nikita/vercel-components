@@ -1,7 +1,5 @@
 import React from "react";
-
-import { Button, ButtonProps } from "../Button";
-
+import { Button, ButtonProps } from "@components/Button";
 import { useMenu } from "./menu-context";
 
 export const MenuButton: React.FC<ButtonProps> = ({

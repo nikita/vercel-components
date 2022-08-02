@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 import clsx from "clsx";
 import styles from "./TextField.module.css";
 
-import { Label } from "../Label";
+import { Label } from "@components/Label";
 
 type InputProps = Partial<
   React.DetailedHTMLProps<
@@ -61,7 +61,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
 
     if (label) {
       return (
-        <Label htmlFor={props.id || props.name} label={label}>
+        <Label htmlFor={props.id || props.name} /* label={label} */>
           <div className={containerClassName}>
             <input {...props} ref={ref} className={inputClassName} />
             {_prefix}

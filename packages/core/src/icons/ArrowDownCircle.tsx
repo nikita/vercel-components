@@ -1,4 +1,4 @@
-import { Icon } from "../components/Icon";
+import { Icon } from "@components/Icon";
 
 const ArrowDownCircle = Icon(
   '<circle cx="12" cy="12" r="10"/><path d="M8 12l4 4 4-4"/><path d="M12 8v8"/>',

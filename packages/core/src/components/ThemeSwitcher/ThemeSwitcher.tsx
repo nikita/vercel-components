@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from "react";
 import { useTheme } from "next-themes";
-import { useMounted } from "../../hooks";
-import { Select } from "../../components/Select";
+import { useMounted } from "@hooks";
+import { Select } from "@components/Select";
 import { Sun, Moon, DisplayIcon, ChevronUpDown } from "../../icons";
 
 const ThemeSwitcher = () => {

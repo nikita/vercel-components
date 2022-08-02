@@ -2,9 +2,9 @@ import { Children } from "react";
 import { isFragment } from "react-is";
 import clsx from "clsx";
 
-import { Skeleton } from "../../components/Skeleton";
-import { Text } from "../../components/Text";
-import { Container } from "../../components/Container";
+import { Skeleton } from "@components/Skeleton";
+import { Text } from "@components/Text";
+import { Container } from "@components/Container";
 
 import styles from "./Entity.module.css";
 import EntityField from "./EntityField";
@@ -87,7 +87,8 @@ const Entity: FCC<Props> = ({
               <Text
                 className="geist-themed geist-secondary"
                 style={{ width: "100%" }}
-                color={"geist-secondary"}
+                // TODO: Fix
+                // color={"geist-secondary"}
               >
                 {footer}
               </Text>

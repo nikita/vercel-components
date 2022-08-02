@@ -2,10 +2,9 @@ import React, { useEffect, useState, useRef, useMemo } from "react";
 import clsx from "clsx";
 import Portal from "@reach/portal";
 import { usePopper } from "react-popper";
-import { useId } from "../../hooks";
+import { useId, useMediaQuery } from "@hooks";
 import { FCC } from "../../react";
-import { useMediaQuery } from "../../hooks/useMediaQuery";
-import { Drawer } from "../Drawer";
+import { Drawer } from "@components/Drawer";
 import classes from "./Menu.module.css";
 import MenuContext, { useMenu } from "./menu-context";
 

@@ -4,12 +4,12 @@ import { mergeRefs } from "react-merge-refs";
 import { useHover } from "@react-aria/interactions";
 import { useButton } from "@react-aria/button";
 import { useFocusRing } from "@react-aria/focus";
-import { Spinner } from "../Spinner";
-import { getThemed } from "../../utils/getThemed";
-import { IconSizeContext } from "../../contexts/IconSizeContext";
-import { DisabledContext } from "../../contexts/DisabledContext";
-import reset from "../../styles/reset/reset.module.css";
+import { Spinner } from "@components/Spinner";
+import { getThemed } from "@utils/getThemed";
+import { IconSizeContext } from "@contexts/IconSizeContext";
+import { DisabledContext } from "@contexts/DisabledContext";
 import styles from "./button.module.css";
+import reset from "@styles/reset.module.css";
 
 type IntrinsicProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,

@@ -1,12 +1,12 @@
 import { memo, DetailedHTMLProps, SelectHTMLAttributes } from "react";
 import clsx from "clsx";
-import { useId } from "../../hooks";
+import { useId } from "@hooks";
 import { FCC } from "../../react";
-import { Label } from "../Label";
-import { getThemed } from "../../utils/getThemed";
-import { IconSizeContext } from "../../contexts/IconSizeContext";
-import { useDisabled } from "../../contexts/DisabledContext";
-import ChevronDown from "../../icons/ChevronDown";
+import { Label } from "@components/Label";
+import { getThemed } from "@utils/getThemed";
+import { IconSizeContext } from "@contexts/IconSizeContext";
+import { useDisabled } from "@contexts/DisabledContext";
+import ChevronDown from "@icons/ChevronDown";
 import styles from "./Select.module.css";
 
 type newAttributes = Omit<SelectHTMLAttributes<HTMLSelectElement>, "size"> & {

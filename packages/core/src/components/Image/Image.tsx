@@ -1,7 +1,7 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { memo } from "react";
 import clsx from "clsx";
 import NextImage from "next/image";
-import { useMounted } from "../../hooks";
+import { useMounted } from "@hooks";
 
 interface ImageProps {
   alt?: string;

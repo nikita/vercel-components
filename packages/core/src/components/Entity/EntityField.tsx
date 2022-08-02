@@ -1,18 +1,18 @@
 import { useContext } from "react";
 import clsx from "clsx";
 
-import { Skeleton } from "../../components/Skeleton";
-import { Container } from "../../components/Container";
-import { Text } from "../../components/Text";
+import { Skeleton } from "@components/Skeleton";
+import { Container } from "@components/Container";
+import { Text } from "@components/Text";
 
 import { PlaceHolderContext } from "./index";
 import styles from "./Entity.module.css";
 import dotsMenu from "./dots-menu.module.css";
-import button from "../Button/button.module.css";
-import reset from "../../styles/reset/reset.module.css";
+import button from "@components/Button/button.module.css";
+import reset from "@styles/reset.module.css";
 
-import { Spacer } from "../Spacer";
-import MoreVertical from "../../icons/MoreVertical";
+import { Spacer } from "@components/Spacer";
+import MoreVertical from "@icons/MoreVertical";
 
 interface EntityFieldProps {
   children?: React.ReactNode;

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import clsx from "clsx";
-import { GeistText } from "../../components/Text";
-import { useToasts } from "../../components/Toast";
+import { GeistText } from "@components/Text";
+import { useToasts } from "@components/Toast";
 import { useTheme } from "next-themes";
-import { useMounted } from "../../hooks";
+import { useMounted } from "@hooks";
 import styles from "./color-card.module.css";
 
 const rgbToHex = (rgb: string) =>
