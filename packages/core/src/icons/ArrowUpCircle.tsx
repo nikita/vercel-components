@@ -1,4 +1,4 @@
-import { Icon } from "@components/Icon";
+import { Icon } from "@contexts/IconSizeContext";
 
 const ArrowUpCircle = Icon(
   '<circle cx="12" cy="12" r="10"/><path d="M16 12l-4-4-4 4"/><path d="M12 16V8"/>'

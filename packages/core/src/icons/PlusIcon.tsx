@@ -1,4 +1,4 @@
-import { Icon } from "@components/Icon";
+import { Icon } from "@contexts/IconSizeContext";
 
 const PlusIcon = Icon('<path d="M12 5v14"/><path d="M5 12h14"/>');
 
