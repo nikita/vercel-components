@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import XIcon from "@icons/XIcon";
+import XIcon from "@icons/X";
 import { LinkOld } from "@components/Link";
 import { IconSizeContext } from "@contexts/IconSizeContext";
 import useBanner from "./useBanner";

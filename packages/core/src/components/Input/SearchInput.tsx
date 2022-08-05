@@ -1,8 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { DetailedHTMLProps, InputHTMLAttributes } from "react";
-
-import Search from "@icons/Search";
+import SearchIcon from "@icons/Search";
 import styles from "./SearchInput.module.css";
 
 interface Props
@@ -15,7 +14,7 @@ const SearchInput = ({ className, ...props }: Props) => {
   return (
     <div className={styles.wrapper}>
       <span className={styles.icon}>
-        <Search />
+        <SearchIcon />
       </span>
       <div className={styles.input_wrapper}>
         <input className={clsx(className, styles.input)} {...props} />

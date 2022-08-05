@@ -2,7 +2,10 @@ import React, { useEffect, useCallback } from "react";
 import { useTheme } from "next-themes";
 import { useMounted } from "@hooks";
 import { Select } from "@components/Select";
-import { Sun, Moon, DisplayIcon, ChevronUpDown } from "../../icons";
+import SunIcon from "@icons/Sun";
+import MoonIcon from "@icons/Moon";
+import DisplayIcon from "@icons/Display";
+import ChevronUpDownIcon from "@icons/ChevronUpDown";
 
 const ThemeSwitcher = () => {
   const mounted = useMounted();
@@ -32,15 +35,15 @@ const ThemeSwitcher = () => {
       value={theme || defaultTheme}
       prefix={
         theme === "dark" ? (
-          <Moon size={16} />
+          <MoonIcon size={16} />
         ) : theme === "light" ? (
-          <Sun size={16} />
+          <SunIcon size={16} />
         ) : (
           <DisplayIcon size={16} />
         )
       }
       size="small"
-      suffix={<ChevronUpDown size={16} />}
+      suffix={<ChevronUpDownIcon size={16} />}
     >
       <option value="system">System</option>
       <option value="dark">Dark</option>

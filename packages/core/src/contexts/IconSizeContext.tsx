@@ -13,7 +13,7 @@ export interface Props {
   color?: string;
   secondary?: string;
   size?: number | string;
-  fill?: string;
+  fill?: boolean;
   viewBox?: string;
 
   weight?: string;
