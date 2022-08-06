@@ -8,13 +8,14 @@ import { Spinner } from "@components/Spinner";
 import { getThemed } from "@utils/getThemed";
 import { IconSizeContext } from "@contexts/IconSizeContext";
 import { DisabledContext } from "@contexts/DisabledContext";
-import reset from "@styles/reset.module.css";
 import styles from "./button.module.css";
 
 type IntrinsicProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 >;
+
+const w = (e) => (e ? "" : undefined);
 
 export interface Props extends Omit<IntrinsicProps, "prefix" | "type"> {
   Component?: any;
@@ -41,8 +42,8 @@ export interface Props extends Omit<IntrinsicProps, "prefix" | "type"> {
 const Button: FC<Props> = forwardRef(
   (
     {
-      Component,
-      typeName,
+      Component = "button",
+      typeName = "submit",
       className,
       href,
       as,
@@ -56,7 +57,7 @@ const Button: FC<Props> = forwardRef(
       prefix,
       suffix,
       onClick,
-      variant,
+      variant = "invert",
       shape,
       align,
       children,
@@ -69,10 +70,6 @@ const Button: FC<Props> = forwardRef(
     },
     externalRef
   ) => {
-    const ComponentNew = Component === undefined ? "button" : Component;
-    const typeNameNew = typeName === undefined ? "submit" : typeName;
-    const variantNew = variant === undefined ? "invert" : variant;
-
     const ctxDisabled = useContext(DisabledContext);
     const isDisabled = disabled || loading || ctxDisabled;
 
@@ -80,14 +77,14 @@ const Button: FC<Props> = forwardRef(
     const ref = useRef<HTMLButtonElement>();
     const { focusProps, isFocusVisible } = useFocusRing();
     const { hoverProps, isHovered } = useHover({
-      isDisabled: isDisabled || loading,
+      isDisabled,
     });
     const { buttonProps, isPressed } = useButton(
       {
-        isDisabled: disabled,
-        target: target,
-        rel: rel,
-        elementType: ComponentNew,
+        isDisabled,
+        target,
+        rel,
+        elementType: Component,
         // @ts-ignore
         onPress: onClick,
         // @ts-ignore
@@ -109,18 +106,20 @@ const Button: FC<Props> = forwardRef(
     };
 
     return (
-      <ComponentNew
+      <Component
         onClick={passthroughOnClick}
         onMouseEnter={passthroughOnMouseEnter}
-        ref={mergeRefs([ref, externalRef])}
+        {...hoverProps}
+        {...focusProps}
+        {...buttonProps}
+        {...props}
+        as={as}
         className={
-          variantNew === "unstyled"
+          variant === "unstyled"
             ? clsx(styles.base, className)
             : clsx(
                 styles.base,
-                reset.reset,
                 styles.button,
-                reset.reset,
                 className,
                 type !== "secondary" ? themeType : null,
                 [
@@ -133,39 +132,38 @@ const Button: FC<Props> = forwardRef(
                     [styles.large]: size === "large",
                   },
                 ],
-                variantNew ? styles[variantNew] : undefined
+                styles[variant]
               )
         }
+        data-active={disabled ? undefined : w(isPressed)}
+        data-focus={disabled ? undefined : w(isFocusVisible)}
+        data-geist-button=""
+        data-hover={disabled ? undefined : w(isHovered)}
+        // data-testid={props["data-testid"]}
+        data-version="v1"
+        href={href}
+        ref={mergeRefs([ref, externalRef])}
         style={{
           ...props.style,
           minWidth: width,
           maxWidth: width,
         }}
-        href={href}
-        as={as}
-        type={typeNameNew}
-        data-hover={!disabled && isHovered ? "" : null}
-        data-active={!disabled && isPressed ? "" : null}
-        data-focus={!disabled && isFocusVisible ? "" : null}
-        data-geist-button=""
-        {...hoverProps}
-        {...focusProps}
-        {...buttonProps}
-        {...props}
+        type={typeName}
       >
         <IconSizeContext.Provider value={iconSizeContextValue(size)}>
           {(prefix || loading) && (
             <span className={styles.prefix}>
               {loading ? (
                 <Spinner
-                  size={iconSizeContextValue(size)}
                   color={"var(--accents-5)"}
+                  size={iconSizeContextValue(size)}
                 />
               ) : (
                 prefix
               )}
             </span>
           )}
+
           <span
             className={clsx(styles.content, {
               [styles.flex]: svgOnly,
@@ -177,9 +175,10 @@ const Button: FC<Props> = forwardRef(
           >
             {children}
           </span>
+
           {suffix && <span className={styles.suffix}>{suffix}</span>}
         </IconSizeContext.Provider>
-      </ComponentNew>
+      </Component>
     );
   }
 );

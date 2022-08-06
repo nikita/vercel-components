@@ -6,6 +6,8 @@
   -ms-user-select: none;
   user-select: none;
   background: none;
+
+  composes: reset from "../../styles/reset.module.css";
 }
 
 .button {
@@ -25,6 +27,8 @@
   font-size: var(--geist-form-font);
   line-height: var(--geist-form-line-height);
   height: var(--geist-form-height);
+
+  composes: reset from "../../styles/reset.module.css";
 }
 
 .content {
@@ -142,6 +146,10 @@
 .shadow[data-hover] {
   box-shadow: var(--shadow-medium);
   transform: translateY(-2px);
+}
+
+.shadow[data-hover].secondary {
+  color: var(--geist-foreground);
 }
 
 .shadow[data-active] {

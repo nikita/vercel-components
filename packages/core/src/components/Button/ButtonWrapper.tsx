@@ -4,11 +4,12 @@ import Button from "./Button";
 
 type IntrinsicProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export interface Props extends Omit<IntrinsicProps, "type"> {
+interface Props extends Omit<IntrinsicProps, "type"> {
   href?: string;
   as?: string;
   tab?: boolean;
   shallow?: boolean;
+  scroll?: boolean;
   loading?: boolean;
 }
 
@@ -24,11 +25,11 @@ interface BtnRefProps extends Omit<IntrinsicProps, "type"> {
 const isInternal = (href: string) => href.startsWith("/");
 
 const ButtonWrapper: React.FC<Props> = ({
-  // custom props
   href,
   as,
   tab,
   shallow,
+  scroll,
   children,
   ...props
 }) => {
@@ -43,7 +44,10 @@ const ButtonWrapper: React.FC<Props> = ({
         href={props.disabled ? undefined : href}
         rel={tab ? "noopener" : undefined}
         target={tab ? "_blank" : undefined}
-      ></Button>
+        {...props}
+      >
+        {children}
+      </Button>
     );
 
   const BtnRef = React.forwardRef(
@@ -70,11 +74,11 @@ const ButtonWrapper: React.FC<Props> = ({
       href={href}
       legacyBehavior={true}
       passHref={!!href}
+      scroll={scroll}
       shallow={shallow}
     >
       <BtnRef
         Component="a"
-        href={props.disabled ? null : href}
         rel={tab ? "noopener" : null}
         target={tab ? "_blank" : null}
         {...props}
