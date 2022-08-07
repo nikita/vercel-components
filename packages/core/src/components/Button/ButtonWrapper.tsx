@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React from "react";
 import Link from "next/link";
 import Button from "./Button";
 
@@ -23,6 +23,25 @@ interface BtnRefProps extends Omit<IntrinsicProps, "type"> {
 
 // Vercel uses defined array of paths - href.pathname.startsWith("/support") || href.pathname.startsWith("/docs") ...
 const isInternal = (href: string) => href.startsWith("/");
+
+const BtnRef = React.forwardRef(
+  (
+    { children, onClick, onMouseEnter, ...props }: BtnRefProps,
+    ref: React.ForwardedRef<HTMLButtonElement>
+  ) => {
+    return (
+      <Button
+        ref={ref}
+        {...props}
+        passthroughOnClick={onClick}
+        passthroughOnMouseEnter={onMouseEnter}
+      >
+        {children}
+      </Button>
+    );
+  }
+);
+BtnRef.displayName = "ButtonWrapper";
 
 const ButtonWrapper: React.FC<Props> = ({
   href,
@@ -50,24 +69,6 @@ const ButtonWrapper: React.FC<Props> = ({
       </Button>
     );
 
-  const BtnRef = React.forwardRef(
-    (
-      { children, onClick, onMouseEnter, ...props }: BtnRefProps,
-      ref: React.ForwardedRef<HTMLButtonElement>
-    ) => {
-      return (
-        <Button
-          ref={ref}
-          {...props}
-          passthroughOnClick={onClick}
-          passthroughOnMouseEnter={onMouseEnter}
-        >
-          {children}
-        </Button>
-      );
-    }
-  );
-
   return (
     <Link
       as={as}
@@ -79,8 +80,8 @@ const ButtonWrapper: React.FC<Props> = ({
     >
       <BtnRef
         Component="a"
-        rel={tab ? "noopener" : null}
-        target={tab ? "_blank" : null}
+        rel={tab ? "noopener" : undefined}
+        target={tab ? "_blank" : undefined}
         {...props}
       >
         {children}
@@ -89,5 +90,4 @@ const ButtonWrapper: React.FC<Props> = ({
   );
 };
 
-ButtonWrapper.displayName = "ButtonWrapper";
 export default ButtonWrapper;
