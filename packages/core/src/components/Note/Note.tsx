@@ -1,78 +1,61 @@
 import React from "react";
 import clsx from "clsx";
-import styles from "./Note.module.css";
+import styles from "./note.module.css";
+import { getThemed } from "@utils/getThemed";
+import { GeistText } from "@components/Text";
 
 interface Props {
   children?: React.ReactNode;
-  size?: "small" | "large";
-  /**
-   * action={<Button size="small">Upgrade</Button>}
-   */
-  action?: React.ReactNode;
+  className?: string;
   type?: "secondary" | "success" | "error" | "warning";
-  label?: false | string;
-  small?: boolean;
   fill?: boolean;
+  label?: false | string;
+  size?: "small" | "large";
+  center?: boolean;
   variant?: "contrast";
-  style?: React.CSSProperties;
+  action?: React.ReactNode;
 }
-
-const labelMap = {
-  secondary: "Note: ",
-  success: "Success: ",
-  error: "Error: ",
-  warning: "Warning: ",
-};
-
-const getLabel = (label?: false | string, type?: Props["type"]) => {
-  if (label === false) return null;
-  if (typeof label === "undefined" && !type) return "Note: ";
-  if (label) return label;
-  if (type) return labelMap[type];
-};
 
 const Note = ({
   children,
-  size,
-  label,
-  action,
+  className,
   type,
   fill,
+  label,
+  size,
+  center,
   variant,
-  style, // for mdx
+  action,
+  ...props
 }: Props) => {
+  // @ts-ignore
+  const themed = getThemed(type, fill, variant);
+
   return (
     <div
-      {...{ style }}
-      className={clsx(styles.note, {
-        [styles.small]: size === "small",
-        [styles.large]: size === "large",
-        ["geist-themed"]: !!type,
-        ["geist-secondary"]: type === "secondary",
-        ["geist-success"]: type === "success",
-        ["geist-error"]: type === "error",
-        ["geist-warning"]: type === "warning",
+      className={clsx(styles.note, className, themed, {
+        [styles.small]: "small" === size,
+        [styles.large]: "large" === size,
         [styles.fill]: fill,
-        ["geist-secondary-fill"]: fill && type === "secondary",
-        ["geist-success-fill"]: fill && type === "success",
-        ["geist-error-fill"]: fill && type === "error",
-        ["geist-warning-fill"]: fill && type === "warning",
-        ["geist-secondary-contrast"]:
-          variant === "contrast" && type === "secondary",
-        ["geist-success-contrast"]:
-          variant === "contrast" && type === "success",
-        ["geist-error-contrast"]: variant === "contrast" && type === "error",
-        ["geist-warning-contrast"]:
-          variant === "contrast" && type === "warning",
+        [styles.center]: center,
       })}
+      {...props}
+      data-geist-note=""
+      data-version="v1"
     >
       <span>
-        <span className={"geist-text span"}>
-          <b>{getLabel(label, type)}</b>
-        </span>
+        {label !== false && (
+          <GeistText bold={true} span={true}>
+            {(label && `${label}:`) ||
+              (type === "success" && "Success: ") ||
+              (type === "error" && "Error: ") ||
+              (type === "warning" && "Warning: ") ||
+              "Note: "}
+          </GeistText>
+        )}
         {children}
       </span>
-      {action && <div className={styles.action}>{action}</div>}
+      {action && <div>{action}</div>}
     </div>
   );
 };
