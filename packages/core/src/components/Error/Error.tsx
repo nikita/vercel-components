@@ -34,9 +34,6 @@ const Error = ({
 }: Props) => {
   const iconSize = defaultIconSize(size);
 
-  console.log("children", children);
-  console.log("error", error);
-
   const ActionLink = React.useMemo(() => {
     if (children) return children;
     if (React.isValidElement(error)) return error;
@@ -64,7 +61,6 @@ const Error = ({
 
     return error;
   }, [children, error]);
-  console.log("ActionLink", ActionLink);
 
   return (
     <div
