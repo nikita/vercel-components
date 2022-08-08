@@ -1,13 +1,13 @@
 import React, { forwardRef, Ref } from "react";
-import Link from "next/link";
+import NextLink from "next/link";
 import clsx from "clsx";
-import styles from "./Link.module.css";
-//import ExternalLink from "@icons/ExternalLink";
+import styles from "./link.module.css";
+import ExternalLink from "@icons/ExternalLink";
 
-export interface Props {
+interface Props {
   type?: string;
   variant?: string;
-  external?: string;
+  external?: boolean | string;
   tab?: boolean;
   href?: string;
   children?: React.ReactNode;
@@ -33,7 +33,7 @@ const isInternalLink = (href: string | URL) => {
   return !!external;
 };
 
-const LinkComponent = forwardRef(
+const Link = forwardRef(
   (
     {
       type,
@@ -74,12 +74,10 @@ const LinkComponent = forwardRef(
           ref={ref}
         >
           {children}
-          {/*
-            TODO
-            {Boolean(external) ? (
-              <ExternalLink className={styles.externalIcon}  size="1em" />
-            ) : null}
-          */}
+          {Boolean(external) ? (
+            // @ts-ignore
+            <ExternalLink className={styles.externalIcon} size="1em" />
+          ) : null}
         </a>
       );
     }
@@ -103,7 +101,7 @@ const LinkComponent = forwardRef(
           (isExternal || (isPrefetch = false),
           (
             <>
-              <Link
+              <NextLink
                 as={as}
                 href={href}
                 passHref={passHref}
@@ -114,7 +112,7 @@ const LinkComponent = forwardRef(
                 ref={ref}
               >
                 {children}
-              </Link>
+              </NextLink>
             </>
           ))
         )
@@ -150,5 +148,5 @@ const LinkComponent = forwardRef(
   }
 );
 
-LinkComponent.displayName = "Link";
-export default LinkComponent;
+Link.displayName = "Link";
+export default Link;
