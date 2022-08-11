@@ -6,6 +6,7 @@ import { useButton } from "@react-aria/button";
 import { useFocusRing } from "@react-aria/focus";
 import { Spinner } from "@components/Spinner";
 import { getThemed } from "@utils/getThemed";
+import { defaultIconSize } from "@utils/iconSize";
 import { IconSizeContext } from "@contexts/IconSizeContext";
 import { DisabledContext } from "@contexts/DisabledContext";
 import styles from "./button.module.css";
@@ -95,16 +96,6 @@ const Button: FC<Props> = forwardRef(
       ref
     );
 
-    const iconSizeContextValue = (size) => {
-      const sizes = {
-        arge: 24,
-        small: 16,
-        default: 20,
-      };
-
-      return sizes[size || "default"];
-    };
-
     return (
       <Component
         onClick={passthroughOnClick}
@@ -150,13 +141,13 @@ const Button: FC<Props> = forwardRef(
         }}
         type={typeName}
       >
-        <IconSizeContext.Provider value={iconSizeContextValue(size)}>
+        <IconSizeContext.Provider value={defaultIconSize(size)}>
           {(prefix || loading) && (
             <span className={styles.prefix}>
               {loading ? (
                 <Spinner
                   color={"var(--accents-5)"}
-                  size={iconSizeContextValue(size)}
+                  size={defaultIconSize(size)}
                 />
               ) : (
                 prefix

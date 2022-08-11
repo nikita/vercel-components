@@ -56,7 +56,7 @@ const ButtonWrapper: React.FC<Props> = ({
     return <Button {...props}>{children}</Button>;
 
   // Link is not internal
-  if (typeof href === "string" && (tab || (href && !isInternal)))
+  if (typeof href === "string" && (tab || (href && !isInternal(href))))
     return (
       <Button
         Component="a"
