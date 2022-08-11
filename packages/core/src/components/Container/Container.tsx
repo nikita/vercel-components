@@ -43,117 +43,172 @@ interface Props {
    * `wrapper ? "geist-wrapper" : "geist-container"`
    */
   wrapper?: boolean;
+
+  top?: string;
+  bottom?: string;
+  halfGap?: boolean;
+  inline?: boolean;
+  full?: boolean;
+  classNames?: any;
+  styleSets?: any;
+  Component?: any;
 }
 
-const Container = ({
-  children,
-  flex = 1,
-  row,
-  direction, // default "column"
-  className,
-  style,
-  hcenter,
-  vcenter,
-  vbaseline,
-  left,
-  center,
-  right,
-  gap = 1,
-  noWrap,
-  wrapper,
-}: Props) => {
-  let __flex = flex;
-  let __justify_content = "flex-start";
-  let __align_items = "stretch";
+const cfg = {
+  row: {
+    align: {
+      top: "flex-start",
+      bottom: "flex-end",
+      center: "center",
+      default: "stretch",
+      baseline: "baseline",
+    },
+    justify: {
+      left: "flex-start",
+      right: "flex-end",
+      center: "center",
+      default: "flex-start",
+    },
+  },
+  column: {
+    align: {
+      left: "flex-start",
+      right: "flex-end",
+      center: "center",
+      default: "stretch",
+    },
+    justify: {
+      top: "flex-start",
+      bottom: "flex-end",
+      center: "center",
+      default: "flex-start",
+      baseline: "baseline",
+    },
+  },
+};
+
+const g = {
+  MOBILE: "mobile",
+  TABLET: "tablet",
+  DESKTOP: "desktop",
+};
+
+const m = Object.keys(g).length;
+const rowOptions = Array(m).fill("row");
+const columnOptions = Array(m).fill("column");
+
+const Container = (
+  {
+    row,
+    direction,
+    left,
+    right,
+    top,
+    bottom,
+    hcenter,
+    vcenter,
+    vbaseline,
+    center,
+    noWrap,
+    wrapper,
+    halfGap,
+    gap,
+    children,
+    flex = 1,
+    inline,
+    full,
+    classNames = [],
+    styleSets = null,
+    Component = "div",
+    className,
+    style,
+    ...props
+  }: Props,
+  ref
+) => {
+  let justifyContent;
+  let alignItems;
+
+  const _justifyContent = left
+    ? "left"
+    : right
+    ? "right"
+    : hcenter || center
+    ? "center"
+    : "default";
+  const _alignItems = top
+    ? "top"
+    : bottom
+    ? "bottom"
+    : vcenter || center
+    ? "center"
+    : vbaseline
+    ? "baseline"
+    : "default";
+
   if (row) {
-    if (center) {
-      __justify_content = "center";
-      __align_items = "center";
-    }
-    if (vcenter) {
-      __align_items = "center";
-    }
-    if (hcenter) {
-      __justify_content = "center";
-    }
-    if (right) {
-      __justify_content = "flex-end";
-    }
-    if (left) {
-      __justify_content = "flex-start";
-    }
-  } /* column */ else {
-    if (center) {
-      __justify_content = "center";
-      __align_items = "center";
-    }
-    if (vcenter) {
-      __justify_content = "center";
-    }
-    if (hcenter) {
-      __align_items = "center";
-    }
-    if (right) {
-      __align_items = "flex-end";
-    }
-    if (left) {
-      __align_items = "flex-start";
-    }
+    justifyContent = cfg.row.justify[_justifyContent];
+    alignItems = cfg.row.align[_alignItems];
+  } else {
+    justifyContent = cfg.column.justify[_alignItems];
+    alignItems = cfg.column.align[_justifyContent];
   }
 
+  const currentGap = halfGap ? 0.5 : gap === undefined ? 1 : gap;
+  const currentDirection =
+    (direction === "row"
+      ? rowOptions
+      : direction === "column"
+      ? columnOptions
+      : direction) || (row ? rowOptions : columnOptions);
+
   const container = (
-    <div
-      className={clsx(
-        "geist-container",
-        noWrap && "nowrap",
-        row && !direction && ["sm-row", "md-row", "lg-row"],
-        direction === "row" && ["sm-row", "md-row", "lg-row"],
-        Array.isArray(direction) &&
-          direction.reduce(
-            (cn, dir, idx) => {
-              const isRow = dir === "row";
-              if (idx === 0) {
-                cn["sm-row"] = isRow;
-                cn["md-row"] = isRow;
-                cn["lg-row"] = isRow;
-              } else if (idx === 1) {
-                cn["md-row"] = isRow;
-                cn["lg-row"] = isRow;
-              } else if (idx === 2) {
-                cn["lg-row"] = isRow;
-              }
-              return cn;
-            },
-            {
-              ["sm-row"]: false,
-              ["md-row"]: false,
-              ["lg-row"]: false,
-            }
-          ),
-        className
-      )}
+    <Component
+      data-version="v1"
+      ref={ref}
       style={{
         ...style,
-        // @ts-ignore
-        "--flex": __flex,
-        "--justify-content": __justify_content,
-        "--align-items": __align_items,
+        "--flex": flex,
+        "--justify-content": justifyContent,
+        "--align-items": alignItems,
       }}
+      {...props}
+      className={
+        (props && className) ||
+        clsx(
+          "geist-container",
+          {
+            "sm-row": currentDirection[0] === "row",
+            "md-row": (currentDirection[1] || currentDirection[0]) === "row",
+            "lg-row":
+              (currentDirection[2] ||
+                currentDirection[1] ||
+                currentDirection[0]) === "row",
+            nowrap: noWrap,
+            inline: inline,
+          },
+          ...classNames,
+          className
+        ) ||
+        ""
+      }
     >
       {children}
       <style jsx>{`
         .geist-container > :global(*) {
-          --gap-ratio: ${gap};
+          --gap-ratio: ${currentGap};
         }
       `}</style>
-    </div>
+      {styleSets}
+    </Component>
   );
 
-  if (wrapper) {
-    return <div className={"geist-wrapper"}>{container}</div>;
-  } else {
-    return container;
-  }
+  return wrapper ? (
+    <div className={clsx("geist-wrapper", { full: full })}>{children}</div>
+  ) : (
+    container
+  );
 };
 
-export default Container;
+Container.displayName = "Container";
+export default React.forwardRef(Container);
