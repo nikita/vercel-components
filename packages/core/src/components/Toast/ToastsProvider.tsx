@@ -1,7 +1,10 @@
-import React from "react";
-import { createContext, useState, useRef } from "react";
+import { createContext, useContext, useState, Component } from "react";
+import ToastArea from "./ToastArea";
+
+let env = "developement";
 
 type ToastType = "success" | "error" | "violet";
+
 export interface IToast {
   height: number;
   key: string;
@@ -12,109 +15,98 @@ export interface IToast {
   cancelAction?: string;
 }
 
-export interface IToastsContext {
+interface IToastsContext {
   current?: {
-    messages: IToast[];
-    message: (message: Partial<IToast> | string) => void;
+    clear: void;
     error: (message: Partial<IToast> | string) => void;
-    success: (message: Partial<IToast> | string) => void;
+    message: (message: Partial<IToast> | string) => void;
+    removeToast: (key: string) => void;
     removeToastByKey: (key: string) => void;
+    setMessage: (message: Partial<IToast> | string) => void;
+    setHiding: void;
+    success: (message: Partial<IToast> | string) => void;
+    violet: (message: Partial<IToast> | string) => void;
   };
+  clear: void;
+  error: (message: Partial<IToast> | string) => void;
+  message: (message: Partial<IToast> | string) => void;
+  removeToast: (key: string) => void;
+  removeToastByKey: (key: string) => void;
+  setMessage: (message: Partial<IToast> | string) => void;
+  setHiding: void;
+  success: (message: Partial<IToast> | string) => void;
+  violet: (message: Partial<IToast> | string) => void;
+  loaded: boolean;
 }
 
-const throwerFn = () => {
-  throw new Error("Missing a ToastsProvider");
+const throwerFn = (e: any) => {
+  if ("production" !== env) {
+    const t =
+      typeof e === "number" || Array.isArray(e)
+        ? null
+        : typeof e === "string"
+        ? e
+        : null === e || undefined === e
+        ? undefined
+        : e.text;
+    throw t
+      ? new Error(
+          "Toast with message ".concat(
+            t,
+            " can't display because there is no ToastsContext.Provider"
+          )
+        )
+      : new Error(
+          "Cannot call Toasts methods because there is no ToastsContext.Provider."
+        );
+  }
+  return "";
 };
 
-export const ToastsContext = createContext<IToastsContext>({
-  current: {
-    messages: [],
-    message: throwerFn,
-    error: throwerFn,
-    success: throwerFn,
-    removeToastByKey: throwerFn,
-  },
-});
+export const defaultToasts = {
+  clear: throwerFn,
+  error: throwerFn,
+  message: throwerFn,
+  removeToast: throwerFn,
+  removeToastByKey: throwerFn,
+  setMessage: throwerFn,
+  setHiding: throwerFn,
+  success: throwerFn,
+  violet: throwerFn,
+};
+
+export const ToastsContext = createContext<IToastsContext>(undefined);
+
+/*
+export const ToastsProviderBackup = (NotSure) => {
+  const TP = (t) => {
+    const toasts = useContext(ToastsContext);
+    const [toastMethods, setToastMethods] = useState();
+
+    return toasts ? (
+      <NotSure {...t} />
+    ) : (
+      <ToastsContext.Provider value={toastMethods}>
+        <NotSure {...t} />
+        <ToastArea setToastMethods={setToastMethods} />
+      </ToastsContext.Provider>
+    );
+  };
+
+  TP.getInitialProps = NotSure.getInitialProps;
+  TP.getLayout = NotSure.getLayout;
+  return TP;
+};
+*/
 
 const ToastsProvider = ({ children }) => {
-  const [messages, setMessages] = useState<IToast[]>([]);
-
-  const message = (toast: Partial<IToast> | string) => {
-    let text, preserve, action, cancelAction;
-    if (typeof toast === "string") {
-      text = toast;
-    } else {
-      ({ text, preserve, action, cancelAction } = toast);
-    }
-    setMessages((prev) => [
-      ...prev,
-      {
-        text,
-        preserve,
-        height: action || cancelAction ? 72 : 64,
-        key: (+new Date()).toString(),
-        action,
-        cancelAction,
-      },
-    ]);
-  };
-  const error = (toast: Partial<IToast> | string) => {
-    let text, preserve, action, cancelAction;
-    if (typeof toast === "string") {
-      text = toast;
-    } else {
-      ({ text, preserve, action, cancelAction } = toast);
-    }
-    setMessages((prev) => [
-      ...prev,
-      {
-        text,
-        preserve,
-        height: action || cancelAction ? 72 : 64,
-        key: (+new Date()).toString(),
-        action,
-        cancelAction,
-        type: "error",
-      },
-    ]);
-  };
-  const success = (toast: Partial<IToast> | string) => {
-    let text, preserve, action, cancelAction;
-    if (typeof toast === "string") {
-      text = toast;
-    } else {
-      ({ text, preserve, action, cancelAction } = toast);
-    }
-    setMessages((prev) => [
-      ...prev,
-      {
-        text,
-        preserve,
-        height: action || cancelAction ? 72 : 64,
-        key: (+new Date()).toString(),
-        action,
-        cancelAction,
-        type: "success",
-      },
-    ]);
-  };
-  const removeToastByKey = (key: string) => {
-    setMessages((prev) => prev.filter((p) => p.key !== key));
-  };
+  const [toastMethods, setToastMethods] = useState();
 
   return (
-    <ToastsContext.Provider
-      value={{
-        current: {
-          messages,
-          message,
-          error,
-          success,
-          removeToastByKey,
-        },
-      }}
-    >
+    <ToastsContext.Provider value={toastMethods}>
       {children}
+      {/* @ts-ignore */}
+      <ToastArea setToastMethods={setToastMethods} />
     </ToastsContext.Provider>
   );
 };

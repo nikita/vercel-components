@@ -1,152 +1,219 @@
 import React from "react";
-import { useEffect, useRef, useState, useReducer, useCallback } from "react";
 import clsx from "clsx";
-
-import { Button } from "../Button";
-
-import type { IToast } from "./ToastsProvider";
+import { Button } from "@components/Button";
 import styles from "./toasts.module.css";
 
-interface ToastContainerProps extends IToast {
-  height: number;
-  heights?: number[];
-  hovering: boolean;
-  onMount?: () => void;
-  position?: number;
+interface Props {
+  action?: boolean;
   preserve?: boolean;
+  onMount?: (height: number) => void;
+  shouldHide?: boolean;
   remove?: () => void;
+  position?: number;
+  heights?: number[];
+  invertTheme?: boolean;
+  type: string;
   text: string;
-  id: string;
+  onAction?: any;
+  cancelAction?: any;
+  onCancelAction?: any;
 }
 
-const ToastContainer: React.ComponentType<ToastContainerProps> = ({
-  // children,
-  text,
-  position,
-  height,
-  heights,
-  onMount,
-  remove,
-  preserve,
-  type,
-  action,
-  cancelAction,
-  hovering,
-  ...props
-}) => {
-  const [hiding] = useState(false);
-  const [visible, setVisible] = useState(false);
+interface State {
+  visible: boolean;
+  hiding: boolean;
+  hovering: boolean;
+}
 
-  useEffect(() => {
-    setTimeout(() => setVisible(true), 0);
-  }, []);
+export default class ToastContainer extends React.Component<Props, State> {
+  ref: React.RefObject<any>;
+  hider: any;
 
-  useEffect(() => {
-    // force update, because...
-    // the heights array (mutable ref) gets mutate
-    // we want the changes to be repainted
-    setTimeout(() => onMount?.(), 0);
-  }, [onMount]);
+  constructor(props) {
+    super(props);
 
-  useEffect(() => {
-    // auto-remove, but don't remove if hovering
-    let id: NodeJS.Timeout;
+    this.ref = React.createRef();
 
-    if (!preserve && !hovering) {
-      id = setTimeout(remove, 4000);
-    }
-    return () => {
-      clearTimeout(id);
+    this.state = {
+      visible: false,
+      hiding: false,
+      hovering: false,
     };
-  }, [hovering, preserve]);
+  }
 
-  // get the height of the toast
-  const heightRef = useRef(height);
-  // mutate the array
+  componentDidMount() {
+    const currentRef = this.ref.current;
+    const { height } = currentRef.getBoundingClientRect();
 
-  useEffect(() => {
-    // when mounted, update the heights array with current height
-    heights[position] = heightRef.current;
-    // when unmounting, remove current height from the heights array
-    return () => {
-      heights.splice(position, 1);
+    this.props.onMount(height);
+    setTimeout(() => this.setState({ visible: true }), 10);
+
+    this.props.action ||
+      this.props.preserve ||
+      (this.hider = setTimeout(this.hide, 3500));
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.hider);
+  }
+
+  componentDidUpdate(_, prevState: State) {
+    if (this.props.shouldHide)
+      return (this.hider = setTimeout(this.hider, 300));
+
+    this.props.preserve ||
+      this.props.action ||
+      (this.state.hovering
+        ? clearTimeout(this.hider)
+        : prevState.hovering &&
+          !this.state.hovering &&
+          (this.hider = setTimeout(this.hide, 3500)));
+  }
+
+  hide = () => {
+    this.setState({ hiding: true }, () =>
+      setTimeout(() => this.props.remove(), 200)
+    );
+  };
+
+  calculateHeight() {
+    const { heights, position } = this.props;
+
+    if (position === 0) return;
+
+    // @ts-ignore
+    const height = position * -20;
+
+    return {
+      maxHeight: 50,
+      transform:
+        "translate3d(\n        0,\n        /* eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- TODO: Fix ESLint Error (#13355) */\n        calc(-"
+          // @ts-ignore
+          .concat(heights[0], "px + 100% + ")
+          // @ts-ignore
+          .concat(height, "px),\n        -")
+          // @ts-ignore
+          .concat(position, "px\n      ) scale(")
+          // @ts-ignore
+          .concat(1 - (position / 100) * 5, ")"),
     };
-  }, [position, heights]);
+  }
 
-  const sum = useCallback((a: number, b: number) => a + b, []);
+  static getDerivedStateFromProps(state) {
+    return state.hovering
+      ? {
+          hovering: true,
+        }
+      : {
+          hovering: false,
+        };
+  }
 
-  return (
-    <div
-      data-geist-toast=""
-      className={clsx("toast-container", styles.toastContainer, {
-        [styles.visible]: visible,
-        [styles[type]]: !!type,
-      })}
-      style={{
-        maxHeight: position === 0 ? heightRef.current : 50,
-        transform:
-          // prettier-ignore
-          position === 0
-            ? visible && "none"
-            : `translate3d(0px, calc(-${heights[0]}px + 100% + -${20 * position}px),-${position}px)
-               scale(${1 - position * 0.05})`,
-      }}
-    >
-      <div className={styles.toast}>
-        <div // inner text
-          ref={(el) => (heightRef.current = el?.offsetHeight - 1 + 48)}
-          className={clsx(styles.message, {
-            [styles.action]: action,
-            [styles.cancel]: cancelAction,
-          })}
-        >
-          {text}
-        </div>
-        {cancelAction && (
-          <Button
-            size="small"
-            type="secondary"
-            style={{ marginRight: 10 }}
-            className={clsx("button", "small")}
+  render() {
+    const {
+      text,
+      action,
+      onAction,
+      cancelAction,
+      onCancelAction,
+      type,
+      position,
+      heights,
+      invertTheme,
+    } = this.props;
+    const { visible } = this.state;
+
+    const posHeight =
+      0 === position
+        ? 0
+        : heights
+            .slice(0, position)
+            .filter(Boolean)
+            .reduce((e, t) => (e && t ? e + t : e), 20 * position);
+
+    return (
+      /* ToastContainer */
+      <div
+        data-geist-toast=""
+        ref={this.ref}
+        style={
+          visible
+            ? { maxHeight: heights[position], ...this.calculateHeight() }
+            : undefined
+        }
+        /* Dynamic jsx + styles */
+        className={
+          clsx("toast-container", styles.toastContainer, {
+            "invert-theme": invertTheme,
+            [styles.visible]: visible,
+            [styles.error]: type === "error",
+            [styles.success]: type === "success",
+            [styles.violet]: type === "violet",
+          }) || ""
+        }
+      >
+        <div className={styles.toast}>
+          {/* Toast Message */}
+          <div
+            /* Dynamic jsx */
+            className={
+              clsx(styles.message, {
+                [styles.action]: action,
+                [styles.cancel]: cancelAction,
+              }) || ""
+            }
           >
-            {cancelAction}
-          </Button>
-        )}
-        {action && (
-          <Button size="small" className={clsx("button", "small")}>
-            {action}
-          </Button>
-        )}
+            {text}
+          </div>
+
+          {/* Cancel action button */}
+          {cancelAction && (
+            <Button
+              className={type ? "dark-theme" : undefined}
+              onClick={() => {
+                onCancelAction === null ||
+                  onCancelAction === undefined ||
+                  onCancelAction();
+                this.hide();
+              }}
+              /* small={true} */
+              style={{ marginRight: 10 }}
+              type="secondary"
+            >
+              {cancelAction || "Cancel"}
+            </Button>
+          )}
+
+          {/* Action button */}
+          {action && (
+            <Button
+              className={type ? "dark-theme" : undefined}
+              onClick={() => {
+                onAction === null || onAction === undefined || onAction();
+                this.hide();
+              }}
+              /* small={true} */
+            >
+              {action}
+            </Button>
+          )}
+        </div>
+
+        <style jsx>{`
+         :global(.toast-area:hover) .toast-container {
+          max-height:${heights[position]}px!important;
+          -webkit-transform:translate3d(0,${
+            -1 * (posHeight || 0)
+          }px,-${position}px)scale(1)!important;
+          -moz-transform:translate3d(0,${
+            -1 * (posHeight || 0)
+          }px,-${position}px)scale(1)!important;
+          transform:translate3d(0,${
+            -1 * (posHeight || 0)
+          }"px,-${position}px)scale(1)!important;
+        }
+        `}</style>
       </div>
-      <style jsx>{`
-        :global(.toast-area:hover) .toast-container {
-          max-height: ${heightRef.current}px !important;
-          transform: translate3d(
-              0px,
-              -${heights.slice(0, position).reduce(sum, 0) + position * 20}px,
-              ${position * -1}px
-            )
-            scale(1) !important;
-        }
-        :global(.button.small) {
-          min-width: auto;
-          height: 24px;
-          line-height: 22px;
-          padding: 0 10px 0 10px;
-        }
-      `}</style>
-    </div>
-  );
-};
-
-export default ToastContainer;
-
-// Multiline
-// translate3d(0px, -236px, -2px)
-//  - height 98
-// translate3d(0px, -118px, -1px) scale(1) !important;
-//  - height 98
-// translate3d(0px, 0px, 0px) scale(1) !important;
-//  - height 98
-
-// ransform: translate3d( 0px, 118px, --1px ) scale(1) !important;
+    );
+  }
+}
