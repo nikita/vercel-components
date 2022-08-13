@@ -1,6 +1,6 @@
 {
   "name": "@vercel-components/core",
-  "version": "0.7.0",
+  "version": "0.1.0",
   "author": "никита",
   "description": "React components transcribed from the Vercel design system.",
   "main": "dist/index.mjs",
