@@ -204,7 +204,7 @@ const Container = (
   );
 
   return wrapper ? (
-    <div className={clsx("geist-wrapper", { full: full })}>{children}</div>
+    <div className={clsx("geist-wrapper", { full: full })}>{container}</div>
   ) : (
     container
   );
