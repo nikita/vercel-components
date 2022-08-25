@@ -2,6 +2,7 @@
   display: inline-flex;
   align-items: flex-start;
   font-size: 0.875rem;
+  cursor: pointer;
 }
 
 .fullWidth {
