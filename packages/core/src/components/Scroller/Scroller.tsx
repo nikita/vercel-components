@@ -1,152 +1,114 @@
 import React from "react";
-import { useRef, useEffect, useState } from "react";
 import clsx from "clsx";
-import styles from "./Scroller.module.css";
-import clamp from "lodash/clamp";
-import { isBrowser } from "@utils/isBrowser";
+import throttle from "lodash-es/throttle";
+import useMeasure from "react-use-measure";
+import { ResizeObserver } from "@juggle/resize-observer";
+import styles from "./scroller.module.css";
 
 interface Props {
-  width?: React.HTMLAttributes<HTMLDivElement>["style"]["width"];
-  height?: React.HTMLAttributes<HTMLDivElement>["style"]["height"];
+  width?: string | number;
+  height?: string | number;
   children?: React.ReactNode;
+  className?: string;
+  scrollerClassName?: string;
+  overlayClassName?: string;
+  childrenContainerClassName?: string;
+  gradient?: any;
 }
-const Scroller = ({ width, height, children }: Props) => {
-  const ref = useRef<HTMLDivElement>();
 
-  const [top, setTop] = useState(false);
-  const [right, setRight] = useState(false);
-  const [bottom, setBottom] = useState(false);
-  const [left, setLeft] = useState(false);
+const Scroller = ({
+  width = "100%",
+  height = "100%",
+  children,
+  className,
+  scrollerClassName,
+  overlayClassName,
+  childrenContainerClassName,
+  gradient,
+}: Props) => {
+  const scrollRef = React.useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleScroll = (e) => {
-      if (!ref.current) return;
-      const visibleWidth = ref.current.clientWidth;
-      const scrollableWidth = ref.current.scrollWidth;
+  const [ref, { width: mWidth, height: mHeight }] = useMeasure({
+    polyfill: ResizeObserver,
+  });
 
-      const scrolledX = ref.current.scrollLeft;
-      const percentX = scrolledX / (scrollableWidth - visibleWidth);
-      const x = clamp(Math.round(percentX * 100) / 100, 0, 1);
+  const [scroll, setScroll] = React.useState({
+    top: false,
+    right: false,
+    bottom: false,
+    left: false,
+  });
 
-      if (!isNaN(x)) {
-        switch (x) {
-          case 0:
-            setLeft(false);
-            break;
-          case 1:
-            setRight(false);
-            break;
-          default:
-            setLeft(true);
-            setRight(true);
-            break;
-        }
-      }
+  const scroller = React.useMemo(
+    () =>
+      throttle(() => {
+        if (!scrollRef.current) return;
 
-      const visibleHeight = ref.current.clientHeight;
-      const scrollableHeight = ref.current.scrollHeight;
-      const scrolledY = ref.current.scrollTop;
-      const percentY = scrolledY / (scrollableHeight - visibleHeight);
-      const y = clamp(Math.round(percentY * 100) / 100, 0, 1);
+        const currentRef = scrollRef.current;
+        const scrollTop = currentRef.scrollTop;
+        const scrollLeft = currentRef.scrollLeft;
+        const isScrolledDown = scrollTop > 5;
+        const scrollHeight =
+          scrollTop + currentRef.clientHeight + 5 < currentRef.scrollHeight;
+        const isScrolledSide = scrollLeft > 5;
+        const scrollWidth =
+          scrollLeft + currentRef.clientWidth + 5 < currentRef.scrollWidth;
 
-      if (!isNaN(y)) {
-        switch (y) {
-          case 0:
-            setTop(false);
-            break;
-          case 1:
-            setBottom(false);
-            break;
-          default:
-            setTop(true);
-            setBottom(true);
-            break;
-        }
-      }
-    };
+        setScroll((prevScroll) =>
+          prevScroll.top === isScrolledDown &&
+          prevScroll.bottom === scrollHeight &&
+          prevScroll.left === isScrolledSide &&
+          prevScroll.right === scrollWidth
+            ? prevScroll
+            : {
+                top: isScrolledDown,
+                right: scrollWidth,
+                bottom: scrollHeight,
+                left: isScrolledSide,
+              }
+        );
+      }, 100),
+    []
+  );
 
-    const handleResize = () => {
-      if (!ref.current) return;
-      // WARN: There's an edge case where clientWidth and
-      // scrollWidth may differ by 1 px...
-      const visibleWidth = ref.current.clientWidth;
-      const scrollableWidth = ref.current.scrollWidth;
-      if (Math.abs(visibleWidth - scrollableWidth) <= 1) {
-        setLeft(false);
-        setRight(false);
-      } else {
-        const scrolledX = ref.current.scrollLeft;
-        const percentX = scrolledX / (scrollableWidth - visibleWidth);
-
-        const x = clamp(Math.abs(Math.round(percentX * 100) / 100), 0, 1);
-        switch (x) {
-          case 0:
-            setLeft(false);
-            setRight(true);
-            break;
-          case 1:
-            setRight(false);
-            setLeft(true);
-            break;
-          default:
-            setLeft(true);
-            setRight(true);
-            break;
-        }
-      }
-      const visibleHeight = ref.current.clientHeight;
-      const scrollableHeight = ref.current.scrollHeight;
-      if (visibleHeight - scrollableHeight === 0) {
-        setTop(false);
-        setBottom(false);
-      } else {
-        const scrolledY = ref.current.scrollTop;
-        const percentY = scrolledY / (scrollableHeight - visibleHeight);
-        const y = clamp(Math.round(percentY * 100) / 100, 0, 1);
-
-        switch (y) {
-          case 0:
-            setTop(false);
-            setBottom(true);
-            break;
-          case 1:
-            setBottom(false);
-            setTop(true);
-            break;
-          default:
-            setTop(true);
-            setBottom(true);
-            break;
-        }
-      }
-    };
-
-    if (ref.current) {
-      ref.current.addEventListener("scroll", handleScroll);
-    }
-    isBrowser() && window.addEventListener("resize", handleResize);
-    return () => {
-      if (ref.current) {
-        ref.current.removeEventListener("scroll", handleScroll);
-      }
-      isBrowser() && window.removeEventListener("resize", handleResize);
-    };
-  }, [ref.current]);
+  React.useEffect(() => {
+    scroller();
+  }, [mWidth, mHeight]);
 
   return (
-    <div className={styles.overlayContainer} style={{ width, height }}>
+    <div
+      className={clsx(styles.overlayContainer, className)}
+      data-geist-scroller=""
+      data-version="v1"
+      style={{ width, height }}
+    >
       <div
-        className={clsx(styles.overlay, {
-          [styles.top]: top,
-          [styles.right]: right,
-          [styles.bottom]: bottom,
-          [styles.left]: left,
-        })}
-      ></div>
-      <div className={styles.scroller} ref={ref}>
-        <div>{children}</div>
+        className={clsx(styles.overlay, scroll, overlayClassName)}
+        data-geist-scroller-overlay=""
+        style={
+          gradient
+            ? {
+                // @ts-ignore
+                "--scroller-gradient": gradient,
+              }
+            : undefined
+        }
+      />
+      <div
+        className={(styles.scroller, scrollerClassName)}
+        data-geist-scroller-container=""
+        data-geist-scroller-overflowing={
+          Object.values(scroll).filter(Boolean).length ? "" : undefined
+        }
+        onScroll={scroller}
+        ref={scrollRef}
+      >
+        <div className={childrenContainerClassName} ref={ref}>
+          {children}
+        </div>
       </div>
     </div>
   );
 };
+
 export default Scroller;
