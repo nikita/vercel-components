@@ -16,6 +16,7 @@ interface Props {
   vcenter?: boolean;
   children?: React.ReactNode;
   autoSize?: boolean;
+  animated?: boolean;
 }
 
 const Skeleton = ({
@@ -31,6 +32,7 @@ const Skeleton = ({
   vcenter,
   children,
   autoSize = false,
+  animated = true,
 }: Props) => {
   const shouldWrap = autoSize || Boolean(!!children && !(width || height));
   const margin = shouldWrap ? 0 : Number(boxHeight) - Number(height);
@@ -44,9 +46,11 @@ const Skeleton = ({
         [styles.inline]: !block,
         [styles.rounded]: rounded,
         [styles.squared]: squared,
+        [styles.noAnimation]: !animated,
       })}
       data-geist-skeleton=""
       /* data-testid={formatTestId("legacy", "skeleton")} */
+      data-version="v1"
       style={
         shouldWrap
           ? style
