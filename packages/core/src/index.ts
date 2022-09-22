@@ -23,6 +23,7 @@ export * from "@components/Drawer";
 // export * from "@components/Editor"
 export * from "@components/Entity";
 export * from "@components/Error";
+export * from "@components/FadeIn";
 // export * from "@components/Fieldset";
 export * from "@components/FileTree";
 // export * from "@components/Image";
